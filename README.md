@@ -1,4 +1,4 @@
-# Welcome to GitHub
+# 리듬게임
 
 캡스톤 팀 생성을 축하합니다.
 
