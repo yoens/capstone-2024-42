@@ -32,7 +32,7 @@ public class NoteSpawner : MonoBehaviour
 
         // 노트 생성
         GameObject note = Instantiate(notePrefab, spawnPoint.position, Quaternion.identity);
-        
+        Note noteScript = note.GetComponent<Note>();
         // 생성된 노트에 대한 추가 설정 (예: 이동 방향 설정)
         NoteMovement noteMovement = note.GetComponent<NoteMovement>();
         if (noteMovement != null)
