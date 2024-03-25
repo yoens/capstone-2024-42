@@ -16,33 +16,42 @@ public class JudgmentRound : MonoBehaviour
     {
         if (notesInZone.Count > 0)
         {
-            GameObject noteToJudge = notesInZone[0]; // 예시로 첫 번째 노트를 판정합니다.
-            // 판정 원 중심부터 노트까지의 거리 계산
+            GameObject noteToJudge = notesInZone[0];
             float distanceToCenter = Vector2.Distance(noteToJudge.transform.position, transform.position);
-            // 원 가장자리까지의 거리를 기준으로 판정 범위 계산
-            float distanceToEdge = circleCollider.radius - distanceToCenter;
-            
-            // 거리에 따른 판정 로직
-            if (distanceToEdge < 0.1f) // 원 가장자리에 매우 가까움
-            {
-                Debug.Log("Perfect!");
-            }
-            else if (distanceToEdge < 0.2f)
-            {
-                Debug.Log("Great");
-            }
-            else if (distanceToEdge < 0.3f)
-            {
-                Debug.Log("Good");
-            }
-            else
-            {
-                Debug.Log("Miss"); // 원 중심에 가깝거나 판정 영역 밖
-            }
+            string judgment = GetJudgment(distanceToCenter);
+            Debug.Log($"{judgment} for Note");
 
-            // 노트 제거 및 리스트에서 제거
+            // 판정된 노트 제거
             notesInZone.RemoveAt(0);
             Destroy(noteToJudge);
+        }
+        else
+        {
+            Debug.Log("No notes to judge!");
+        }
+    }
+
+    string GetJudgment(float distance)
+    {
+        // 판정 영역의 반경을 기준으로 점수 계산
+        float maxDistance = circleCollider.radius;
+        float distancePercentage = distance / maxDistance;
+
+        if (distancePercentage < 0.25f)
+        {
+            return "Perfect";
+        }
+        else if (distancePercentage < 0.5f)
+        {
+            return "Great";
+        }
+        else if (distancePercentage < 0.75f)
+        {
+            return "Good";
+        }
+        else
+        {
+            return "Miss";
         }
     }
 
