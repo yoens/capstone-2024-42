@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JudgmentRound : MonoBehaviour
+public class Judgment_yellow : MonoBehaviour
 {
     private List<GameObject> notesInZone = new List<GameObject>();
     private CircleCollider2D circleCollider;
@@ -12,7 +12,7 @@ public class JudgmentRound : MonoBehaviour
         circleCollider = GetComponent<CircleCollider2D>();
     }
 
-    public void JudgeNoteOnButtonClick()
+    public void JudgeNoteOnButtonClick_yellow()
     {
         if (notesInZone.Count > 0)
         {
@@ -30,7 +30,6 @@ public class JudgmentRound : MonoBehaviour
             Debug.Log("No notes to judge!");
         }
     }
-
     string GetJudgment(float distance)
     {
         // 판정 영역의 반경을 기준으로 점수 계산
@@ -57,7 +56,7 @@ public class JudgmentRound : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Note"))
+        if (collider.gameObject.CompareTag("Note_yellow"))
         {
             notesInZone.Add(collider.gameObject);
         }
@@ -65,7 +64,7 @@ public class JudgmentRound : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Note"))
+        if (collider.gameObject.CompareTag("Note_yellow"))
         {
             notesInZone.Remove(collider.gameObject);
         }
