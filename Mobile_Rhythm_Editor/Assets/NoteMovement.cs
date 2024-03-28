@@ -4,25 +4,47 @@ using UnityEngine;
 
 public class NoteMovement : MonoBehaviour
 {
-    public Vector2 moveDirection; // 이동 방향
-    public float moveSpeed = 5f;  // 이동 속도
+    public float growthRate = 0.5f; // 노트가 커지는 속도
+    public float maxScale = 3.0f; // 노트의 최대 크기
+    private Vector2 initialScale = new Vector2(1.0f, 1.0f); // 노트의 초기 크기
 
-    private void Start()
+    public SpriteRenderer spriteRenderer; // 노트의 SpriteRenderer 컴포넌트
+    public Sprite[] noteSprites; // 방향에 따른 노트의 스프라이트 배열 (1,2,3,4)
+
+    private Vector2[] directions = new Vector2[] // 4가지 방향 정의 (1,2,3,4)
     {
-        // 초기 방향을 랜덤으로 설정
-        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-        moveDirection = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
+        new Vector2(2.2f, 3f), // 1사분면
+        new Vector2(-2.2f, 3f), // 2사분면
+        new Vector2(-2.2f, -3f), // 3사분면
+        new Vector2(2.2f, -3f) // 4사분면
+    };
+
+    private Vector3 moveDirection; // 노트가 이동할 방향
+
+    void Start()
+    {
+        transform.localScale = initialScale; // 노트의 초기 크기 설정
+        SetDirectionAndSprite(); // 노트의 방향과 스프라이트 설정
     }
 
-    private void Update()
+    void Update()
     {
-        // 매 프레임마다 노트를 이동시킵니다.
-        transform.position += (Vector3)moveDirection * moveSpeed * Time.deltaTime;
+        // 노트 크기 증가
+        if (transform.localScale.x < maxScale)
+        {
+            transform.localScale += new Vector3(growthRate, growthRate, 0) * Time.deltaTime;
+        }
+
+        // 노트 이동
+        transform.Translate(moveDirection * growthRate * Time.deltaTime, Space.World);
     }
 
-    // 외부에서 이동 방향을 설정하기 위한 메서드 (옵션)
-    public void SetDirection(Vector2 direction)
+    private void SetDirectionAndSprite()
     {
-        moveDirection = direction.normalized;
+        int directionIndex = Random.Range(0, directions.Length); // 4가지 방향 중 하나를 랜덤으로 선택
+        moveDirection = directions[directionIndex]; // 이동 방향 설정
+
+        // 선택된 방향에 맞는 스프라이트를 할당
+        spriteRenderer.sprite = noteSprites[directionIndex];
     }
 }
