@@ -1,4 +1,5 @@
-# Welcome to 리드머 :man_student::woman_student:
+![header](https://capsule-render.vercel.app/api?text=Welcometo리드머)
+#  :man_student: Welcome to 리드머 :woman_student:
 
 ## 1.프로젝트 소개
 
@@ -26,14 +27,15 @@
 ## 2.기술 스택
 
 ### 게임 엔진
-- Unity 2D (C#)
+![U](https://img.shields.io/badge/Unity-100000?style=for-the-badge&logo=unity&logoColor=white) ![C](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 
 ### 웹 라이브러리, 서버 API
-- React
-- Node.js(Javascript)
+![R](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![N](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
 ### DB
-- MariaDB (MySql)
+![DB](https://img.shields.io/badge/MariaDB-003545?style=flat-square&logo=mariaDB&logoColor=white)
+![My](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white)
 
 ### 플랫폼
 -	게임 : 모바일 :iphone: (Android, iOS)
@@ -53,3 +55,4 @@
 ## 4. 소개 자료 
 
 
+![footer](https://capsule-render.vercel.app/api?section=footer)
