@@ -44,13 +44,13 @@
 
 |Backend|Frontend|Frontend|Frontend|Frontend|
 |------|---|---|---|---|
-|[서형석](https://github.com/ming0223)|[김연수](https://github.com/yoens/capstone-2024-42)|[임민옥]()|[최민혁]()|[간솝드](https://github.com/Sumi037/Sumi037.github.io)|
+|[서형석](https://github.com/ming0223)|[김연수](https://github.com/yoens/capstone-2024-42)|[임민옥](https://github.com/analogman27/capstone-2024-42)|[최민혁](https://github.com/alsgur3480)|[간솝드](https://github.com/Sumi037/Sumi037.github.io)|
 |<img width="335" alt="Screenshot 2024-04-01 at 21 31 22" src="https://github.com/kookmin-sw/capstone-2024-42/assets/96248281/b848f9b1-ed2f-470e-b43c-d6fce0e756cf">|<img width="335" alt="Screenshot 2024-04-01 at 21 31 22" src="https://github.com/kookmin-sw/capstone-2024-42/assets/96248281/6f01a715-0dd9-4d36-bb73-b3e5cd1e50f0">|<img width="335" alt="Screenshot 2024-04-01 at 21 31 22" src="https://github.com/kookmin-sw/capstone-2024-42/assets/96248281/dd8543e4-ed30-4c2a-891e-7bd56db62ce3">|<img width="335" alt="Screenshot 2024-04-01 at 21 31 22" src="https://github.com/kookmin-sw/capstone-2024-42/assets/96248281/973b5b8b-8f50-4849-a143-c1b6e8529b2f">|<img width="335" alt="Screenshot 2024-04-01 at 21 31 22" src="https://github.com/kookmin-sw/capstone-2024-42/assets/96248281/223a49f1-3563-4deb-9b54-3d79f4757a15">|
 |팀장. 기획 및 백엔드(서버, DB)|인게임 프론트 엔드 개발 (주요 인게임 기능)|게임 내 사운드, 섭외, PPT, 웹 프론트 엔드 프로그래밍|인게임 프론트 엔드 개발 (UX/UI)|홍보, 웹 디자인 및 프론트 엔드 프로그래밍|
 
 
 # 4. 소개 자료 
-[중간 발표자료](https://docs.google.com/presentation/d/1J4f8aYX8QLhNZCvzuus4FTmF8N2LvLHJ/edit#slide=id.p1)
+[중간 발표자료](https://drive.google.com/file/d/1gj3HCWAdB7f02YaUwiigbU2bRoQ354jm/view?usp=drive_link)
 
 [기획서](https://docs.google.com/document/d/18k8SrplaiWudmbjf0DRjVF7wmH7TWu4i/edit)
 
