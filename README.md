@@ -50,7 +50,7 @@
 
 
 # 4. 소개 자료 
-[중간 발표자료](https://drive.google.com/file/d/1gj3HCWAdB7f02YaUwiigbU2bRoQ354jm/view?usp=drive_link)
+[중간 발표자료](https://drive.google.com/drive/folders/1Jz11L2KL0uSOtRSbaC8uGLLpBEF0COdN?usp=share_link)
 
 [기획서](https://docs.google.com/document/d/18k8SrplaiWudmbjf0DRjVF7wmH7TWu4i/edit)
 
