@@ -50,8 +50,8 @@
 
 
 # 4. 소개 자료 
-[중간 발표자료](https://drive.google.com/drive/folders/1Jz11L2KL0uSOtRSbaC8uGLLpBEF0COdN?usp=share_link)
+[중간 발표자료](https://drive.google.com/drive/folders/1Jz11L2KL0uSOtRSbaC8uGLLpBEF0COdN)
 
-[기획서](https://docs.google.com/document/d/18k8SrplaiWudmbjf0DRjVF7wmH7TWu4i/edit)
+[기획서](https://drive.google.com/drive/folders/1Jz11L2KL0uSOtRSbaC8uGLLpBEF0COdN)
 
 ![footer](https://capsule-render.vercel.app/api?section=footer)
