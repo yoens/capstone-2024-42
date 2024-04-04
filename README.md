@@ -25,7 +25,7 @@
 
 # 2.기술 스택
 
-## 게임 서버 엔진
+## 게임 서버 엔진 ![뒤끝](https://img.shields.io/badge/뒤%20끝-8A2BE2)
 ![U](https://img.shields.io/badge/Unity-100000?style=for-the-badge&logo=unity&logoColor=white) ![C](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 
 ## 웹 라이브러리, 서버 API
