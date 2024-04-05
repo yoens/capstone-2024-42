@@ -51,3 +51,7 @@
 
 # 4. 소개 자료 
 [중간 발표자료](https://drive.google.com/file/d/18gCFVOvwCZVjzrzKr5FOXKwKa723MO-0/view?usp=drive_link)
+
+[기획서](https://drive.google.com/file/d/1pPobxG6_mW5FWjyTf-PtPU_B351k3hOa/view?usp=drive_link)
+
+![footer](https://capsule-render.vercel.app/api?section=footer)
