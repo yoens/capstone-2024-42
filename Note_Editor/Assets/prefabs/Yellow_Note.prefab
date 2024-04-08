@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3664544886267332991}
   - component: {fileID: 4890549789587062860}
   m_Layer: 0
-  m_Name: Green_Yellow
+  m_Name: Yellow_Note
   m_TagString: Note_Y
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
