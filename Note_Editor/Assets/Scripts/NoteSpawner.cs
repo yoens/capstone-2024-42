@@ -10,6 +10,7 @@ public class NoteSpawner : MonoBehaviour
     private bool isDragging = false; // 드래그 중인지 여부를 확인하는 플래그
     private float spawnRate = 0.1f; // 드래그 노트 생성 간격
     private float nextSpawnTime = 0f; // 다음 노트 생성 시간
+    public AudioManager audioManager;
 
     void Update()
     {
@@ -52,7 +53,8 @@ public class NoteSpawner : MonoBehaviour
     {
         GameObject note = Instantiate(prefab, position, Quaternion.identity);
         note.tag = tag;
-        noteManager.AddNote(Time.time, tag, position, Vector3.zero);
+        float musicTime = audioManager.GetMusicTime(); // 음악의 현재 재생 시간 가져오기
+        noteManager.AddNote(musicTime, tag, position, Vector3.zero);
     }
 
     private void SpawnDragNote()
@@ -63,6 +65,7 @@ public class NoteSpawner : MonoBehaviour
         {
             movementComponent.Initialize(dragDirection); // 노트 이동 방향 설정
         }
-        noteManager.AddNote(Time.time, "Drag_Note", spawnPoint.position, dragDirection);
+        float musicTime = audioManager.GetMusicTime(); // 음악의 현재 재생 시간 가져오기
+        noteManager.AddNote(musicTime, "Drag_Note", spawnPoint.position, dragDirection);    
     }
 }
