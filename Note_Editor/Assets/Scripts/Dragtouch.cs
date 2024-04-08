@@ -1,34 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.EventSystems;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Dragtouch : MonoBehaviour, IPointerDownHandler, IDragHandler
+public class DragTouch : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public GameObject objectToRotate; // 회전시킬 오브젝트 지정
-    private Vector2 lastDragPosition;
-    public float rotationSpeed = 0.5f; // 회전 속도 조절 변수
+    public NoteSpawner noteSpawner;
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        // 터치 시작 위치를 기록
-        lastDragPosition = eventData.position;
+        // 드래그 시작 시 NoteSpawner에 드래그 시작을 알림 (인자 없음)
+        noteSpawner.StartDragging();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector2 currentDragPosition = eventData.position;
-        Vector2 direction = currentDragPosition - lastDragPosition;
+        Vector3 currentDragPosition = Camera.main.ScreenToWorldPoint(eventData.position);
+        currentDragPosition.z = 0; // Z 축 값을 0으로 설정하여 2D 평면상에서의 위치로 변환
+        Vector3 dragDirection = currentDragPosition - noteSpawner.spawnPoint.position; // 드래그 방향 계산
 
-        if (direction.x > 0) // 오른쪽으로 드래그
-        {
-            objectToRotate.transform.Rotate(Vector3.forward, -rotationSpeed * direction.magnitude);
-        }
-        else if (direction.x < 0) // 왼쪽으로 드래그
-        {
-            objectToRotate.transform.Rotate(Vector3.forward, rotationSpeed * direction.magnitude);
-        }
+        noteSpawner.UpdateDragDirection(dragDirection); // NoteSpawner에 드래그 방향 업데이트
+    }
 
-        lastDragPosition = currentDragPosition; // 드래그 위치 업데이트
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        noteSpawner.StopDragging(); // 드래그 종료를 NoteSpawner에 알림
     }
 }
