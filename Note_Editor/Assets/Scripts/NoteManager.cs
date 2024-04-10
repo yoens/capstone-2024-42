@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI; 
 using System.IO;
 using SFB;
 using TMPro;
+using UnityEngine.Networking; 
 
 public class NoteManager : MonoBehaviour
 {
@@ -19,6 +21,42 @@ public class NoteManager : MonoBehaviour
             string json = JsonUtility.ToJson(new NoteDataWrapper { Notes = notes }, true);
             File.WriteAllText(path, json);
         }
+    }
+    public void LoadNotes()
+    {
+        var paths = StandaloneFileBrowser.OpenFilePanel("Load Notes", "", "json", false);
+        if (paths.Length > 0 && !string.IsNullOrEmpty(paths[0]))
+        {
+            StartCoroutine(LoadNotesFromFile(paths[0]));
+        }
+        else
+        {
+            Debug.Log("No file selected or invalid file path.");
+        }
+    }
+
+    IEnumerator LoadNotesFromFile(string filePath)
+    {
+        if (string.IsNullOrEmpty(filePath))
+        {
+            Debug.LogError("File path is empty.");
+            yield break; // 코루틴을 여기서 종료
+        }
+
+        // 로컬 파일 시스템에서 파일 읽기
+        string jsonData = File.ReadAllText(filePath);
+
+        NoteDataWrapper loadedData = JsonUtility.FromJson<NoteDataWrapper>(jsonData);
+
+        float lastNoteTime = 0f;
+        // 로드된 노트 데이터를 notes 리스트에 추가
+        foreach (NoteData noteData in loadedData.Notes)
+        {
+            notes.Add(new NoteData(noteData.time, noteData.type, noteData.position, noteData.direction));
+            lastNoteTime = Mathf.Max(lastNoteTime, noteData.time); 
+        }
+        audioManager.SetMusicTime(lastNoteTime);
+        yield return null;
     }
     public void DeleteNotesButtonPressed()
     {
@@ -47,13 +85,12 @@ public class NoteManager : MonoBehaviour
         notes.RemoveAll(note => note.time >= currentTime); // 현재 시간 이후에 생성된 노트들 삭제
     }
    
-
     // 방향 정보를 포함하여 노트를 추가하는 메서드
     public void AddNote(float time, string type, Vector3 position, Vector3 direction)
     {
         notes.Add(new NoteData(time, type, position, direction));
     }
-
+    
     [System.Serializable]
     public class NoteDataWrapper
     {
