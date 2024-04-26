@@ -1,71 +1,70 @@
 using UnityEngine;
+using System.Collections;
 
 public class NoteSpawner : MonoBehaviour
 {
-    public NoteManager noteManager; // NoteManager에 대한 참조
-    public GameObject yellowNotePrefab, greenNotePrefab, dragNotePrefab; // 노트 프리팹
-    public Transform spawnPoint; // 고정된 스폰 지점
-
-    private Vector3 dragDirection = Vector3.right; // 초기 드래그 방향을 오른쪽으로 설정
-    private bool isDragging = false; // 드래그 중인지 여부를 확인하는 플래그
-    private float spawnRate = 0.1f; // 드래그 노트 생성 간격
-    private float nextSpawnTime = 0f; // 다음 노트 생성 시간
+    public NoteManager noteManager; // NoteManager 참조
+    public GameObject yellowNotePrefab, greenNotePrefab, redNotePrefab; // 노트 프리팹
+    public GameObject[] prefabs;
+    public Transform spawnPoint1, spawnPoint2, spawnPoint3; // 고정된 스폰 지점  
+    public Transform[] spawnPoints;
+    public Transform centerPoint; // 회전의 중심점
     public AudioManager audioManager;
 
     void Update()
     {
-        // 단일 노트 생성 (키보드 입력에 응답)
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            SpawnNote(yellowNotePrefab, "Note_Y", spawnPoint.position);
+        if (Input.GetKeyDown(KeyCode.Y)) {
+            SpawnCircularNote(yellowNotePrefab, "Note_Y", spawnPoint1.position);
         }
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G)) {
+            SpawnCircularNote(greenNotePrefab, "Note_G", spawnPoint2.position);
+        }
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SpawnCircularNote(redNotePrefab, "Note_R", spawnPoint3.position);
+        }
+    } 
+    public void SpawnNoteAtIndex(int index)
+    {
+        if (index < 0 || index >= prefabs.Length || index >= spawnPoints.Length) return; // 인덱스 유효성 검사
+
+        GameObject note = Instantiate(prefabs[index], spawnPoints[index].position, Quaternion.identity);
+        note.transform.SetParent(centerPoint); // 필요한 경우 중심점에 맞춰 설정
+        note.tag = "Note_" + index; // 태그 설정도 인덱스에 따라 동적으로 할당
+
+        // CircularMotion 컴포넌트가 있을 경우 설정
+        CircularMotion motionScript = note.GetComponent<CircularMotion>();
+        if (motionScript != null)
         {
-            SpawnNote(greenNotePrefab, "Note_G", spawnPoint.position);
+            motionScript.centerPoint = centerPoint;
+            motionScript.radius = Vector3.Distance(centerPoint.position, spawnPoints[index].position);
+            motionScript.speed = 50.0f;
         }
 
-        // 드래그 중인 경우 일정 간격으로 드래그 노트 생성
-        if (isDragging && Time.time >= nextSpawnTime)
-        {
-            nextSpawnTime = Time.time + spawnRate;
-            SpawnDragNote();
-        }
-    }
+        // 음악 시간 기록
+        float musicTime = audioManager.GetMusicTime();
+        noteManager.AddNote(musicTime, "Note_" + index);
 
-    public void StartDragging()
-    {
-        isDragging = true;
-        // 드래그 시작 시 바로 드래그 노트 생성을 위해 nextSpawnTime을 초기화합니다.
-        nextSpawnTime = Time.time;
     }
-
-    public void UpdateDragDirection(Vector3 direction)
-    {
-        dragDirection = direction.normalized; // 드래그 방향 업데이트
-    }
-
-    public void StopDragging()
-    {
-        isDragging = false;
-    }
-
-    private void SpawnNote(GameObject prefab, string tag, Vector3 position)
+    void SpawnCircularNote(GameObject prefab, string tag, Vector3 position)
     {
         GameObject note = Instantiate(prefab, position, Quaternion.identity);
+        note.transform.SetParent(centerPoint); 
         note.tag = tag;
-        float musicTime = audioManager.GetMusicTime(); // 음악의 현재 재생 시간 가져오기
-        noteManager.AddNote(musicTime, tag, position, Vector3.zero);
+        CircularMotion motionScript = note.GetComponent<CircularMotion>();
+        if (motionScript != null)
+        {
+            motionScript.centerPoint = centerPoint;
+            motionScript.radius = Vector3.Distance(centerPoint.position, position);
+            motionScript.speed = 50.0f;
+        }
+        float musicTime = audioManager.GetMusicTime(); 
+        noteManager.AddNote(musicTime, tag);
+        StartCoroutine(DisableNoteAfterTime(note, 3f));
     }
 
-    private void SpawnDragNote()
+    IEnumerator DisableNoteAfterTime(GameObject note, float time)
     {
-        GameObject note = Instantiate(dragNotePrefab, spawnPoint.position, Quaternion.identity);
-        DragNoteMovement movementComponent = note.GetComponent<DragNoteMovement>();
-        if (movementComponent != null)
-        {
-            movementComponent.Initialize(dragDirection); // 노트 이동 방향 설정
-        }
-        float musicTime = audioManager.GetMusicTime(); // 음악의 현재 재생 시간 가져오기
-        noteManager.AddNote(musicTime, "Drag_Note", spawnPoint.position, dragDirection);    
+        yield return new WaitForSeconds(time);
+        note.SetActive(false);
     }
 }
