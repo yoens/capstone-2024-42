@@ -4,18 +4,17 @@ using System.Linq;
 
 public class NoteJudgment : MonoBehaviour
 {
-    public Transform judgmentLine; // 판정선 위치
+    // 각 노트 타입별 판정선을 선언합니다.
+    public Transform judgmentLine_Y;
+    public Transform judgmentLine_G;
+    public Transform judgmentLine_R;
+
     public float perfectThreshold = 0.05f; // Perfect 판정 거리
     public float greatThreshold = 0.1f; // Great 판정 거리
     public float goodThreshold = 0.15f; // Good 판정 거리
     public float missThreshold = 0.2f; // Miss 판정 거리
 
-    private List<GameObject> notesInPlay = new List<GameObject>(); // 현재 활성화된 노트들의 리스트
-
-    void Start()
-    {
-        // Start()에서 버튼 리스너를 추가하는 코드는 제거됨
-    }
+    private List<GameObject> notesInPlay = new List<GameObject>(); // 활성화된 노트들의 리스트
 
     void Update()
     {
@@ -25,7 +24,6 @@ public class NoteJudgment : MonoBehaviour
 
     void UpdateNotesInPlay()
     {
-        // 현재 활성화된 노트들을 업데이트
         notesInPlay.Clear();
         notesInPlay.AddRange(GameObject.FindGameObjectsWithTag("Note_Y"));
         notesInPlay.AddRange(GameObject.FindGameObjectsWithTag("Note_G"));
@@ -34,46 +32,62 @@ public class NoteJudgment : MonoBehaviour
 
     void CheckMissedNotes()
     {
-        // 판정선을 넘어서 미스가 된 노트를 체크
+        // 각 노트 타입별로 미스를 체크합니다.
         for (int i = notesInPlay.Count - 1; i >= 0; i--)
         {
             var note = notesInPlay[i];
-            if (note.transform.position.y < judgmentLine.position.y - missThreshold)
+            Transform specificJudgmentLine = null;
+
+            // 노트 타입에 따라 사용할 판정선을 결정합니다.
+            if (note.tag == "Note_Y")
+            {
+                specificJudgmentLine = judgmentLine_Y;
+            }
+            else if (note.tag == "Note_G")
+            {
+                specificJudgmentLine = judgmentLine_G;
+            }
+            else if (note.tag == "Note_R")
+            {
+                specificJudgmentLine = judgmentLine_R;
+            }
+
+            // 지정된 판정선이 있을 경우, 해당 노트가 판정선을 넘었는지 확인합니다.
+            if (specificJudgmentLine != null && note.transform.position.y < specificJudgmentLine.position.y - missThreshold)
             {
                 Debug.Log("Miss by distance: " + note.tag);
                 Destroy(note);
                 notesInPlay.RemoveAt(i);
             }
-        }
+        }    
     }
 
-    // 버튼 클릭 이벤트에 의해 호출될 새로운 공개 메소드들
+    // 버튼 클릭 이벤트에 의해 호출될 새로운 메소드들입니다.
     public void JudgeClosestNote_Y()
     {
-        JudgeClosestNote("Note_Y");
+        JudgeClosestNote("Note_Y", judgmentLine_Y);
     }
 
     public void JudgeClosestNote_G()
     {
-        JudgeClosestNote("Note_G");
+        JudgeClosestNote("Note_G", judgmentLine_G);
     }
 
     public void JudgeClosestNote_R()
     {
-        JudgeClosestNote("Note_R");
+        JudgeClosestNote("Note_R", judgmentLine_R);
     }
 
-    // 각 노트 타입에 대한 가장 가까운 노트를 판정하는 메소드
-    private void JudgeClosestNote(string noteType)
+    // JudgeClosestNote 메소드에 특정 판정선을 매개변수로 받도록 변경합니다.
+    private void JudgeClosestNote(string noteType, Transform specificJudgmentLine)
     {
-        // 버튼 클릭 시 해당 타입의 노트 중 가장 판정선에 가까운 노트를 찾아 판정
         var notes = notesInPlay.Where(note => note.tag == noteType).ToList();
         GameObject closestNote = null;
         float minDistance = float.MaxValue;
 
         foreach (GameObject note in notes)
         {
-            float distance = Mathf.Abs(note.transform.position.y - judgmentLine.position.y);
+            float distance = Mathf.Abs(note.transform.position.y - specificJudgmentLine.position.y);
             if (distance < minDistance)
             {
                 closestNote = note;
@@ -90,16 +104,27 @@ public class NoteJudgment : MonoBehaviour
         }
     }
 
-    // 거리에 따라 판정 결과를 결정하는 메소드
     private string DetermineJudgment(float distance)
     {
         if (distance <= perfectThreshold)
+        {
+            ScoreManager.Instance.AddScore(100);
+            ComboManager.Instance.AddCombo(1);
             return "Perfect";
+        }
         if (distance <= greatThreshold)
+        {
+            ScoreManager.Instance.AddScore(80);
+            ComboManager.Instance.AddCombo(1);
             return "Great";
+        }
         if (distance <= goodThreshold)
+        {
+            ScoreManager.Instance.AddScore(50);
+            ComboManager.Instance.AddCombo(1);
             return "Good";
-
+        }
+        ComboManager.Instance.AddCombo(0);
         return "Miss";
     }
 }
