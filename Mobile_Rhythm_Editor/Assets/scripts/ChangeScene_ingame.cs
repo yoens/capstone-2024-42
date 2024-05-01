@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ChangeScene : MonoBehaviour
+public class ChangeScene_ingame : MonoBehaviour
 {
     public void Change_Character_Select_Scene()
     {
