@@ -14,7 +14,9 @@ public class RandomMarkers : MonoBehaviour
 
     private GameObject markerA, markerB;
     private float baseAngle; // 기준 각도
-    private int currentScore = 0; // 현재 점수
+    private float accumulatedRotation = 0f; // 누적 회전 각도
+    private float lastAngle = 0f; // 마지막 확인된 각도
+    private bool isRotating = false; // 회전이 시작되었는지 확인
 
     void Start()
     {
@@ -35,6 +37,9 @@ public class RandomMarkers : MonoBehaviour
 
             countdownText.text = ""; // 카운트다운 텍스트 클리어
             baseAngle = Random.Range(0f, 360f); // 랜덤 기준 각도 설정
+            lastAngle = baseAngle; // 초기 회전 각도 설정
+            accumulatedRotation = 0f; // 누적 회전 초기화
+            isRotating = true; // 회전 시작 표시
             ActivateMarkers(); // 마커 활성화
             yield return new WaitForSeconds(markerLifetime); // 마커의 생존 시간동안 대기
 
@@ -42,7 +47,40 @@ public class RandomMarkers : MonoBehaviour
             {
                 RemoveMarkers();
             }
+            isRotating = false; // 회전 종료
         }
+    }
+
+    public void UpdateRotation(float currentAngle)
+    {
+        if (!isRotating) return; // 회전 중이 아니면 처리하지 않음
+
+        float deltaAngle = Mathf.DeltaAngle(lastAngle, currentAngle);
+        accumulatedRotation += Mathf.Abs(deltaAngle);
+
+        if (accumulatedRotation >= angleBetweenMarkers) // 누적 회전 각도가 설정 각도를 초과하면 성공
+        {
+            CheckSuccess();
+        }
+
+        lastAngle = currentAngle;
+    }
+
+    void CheckSuccess()
+    {
+        if (markerA != null) Destroy(markerA);
+        if (markerB != null) Destroy(markerB);
+
+        GameObject explosion = Instantiate(explosionEffectPrefab, centerPoint.position, Quaternion.identity);
+        Destroy(explosion, 1f); // 1초 후 폭발 효과 제거
+
+        ScoreManager.Instance.AddScore(scorePerSuccess); // 점수 추가
+        Debug.Log("Success! Score: " + ScoreManager.Instance.GetCurrentScore());
+
+        //countdownText.text = "Success! + " + scorePerSuccess + " points";
+
+        accumulatedRotation = 0f; // 누적 회전 초기화
+        isRotating = false; 
     }
 
     void ActivateMarkers()
@@ -57,42 +95,6 @@ public class RandomMarkers : MonoBehaviour
         OrientMarkerTowardsCenter(markerB);
     }
 
-    public void CheckSuccess(float currentAngle)
-    {
-        if (Mathf.Abs(Mathf.DeltaAngle(currentAngle, baseAngle)) < 10f) // 허용 오차 10도
-        {
-            if (markerA != null) Destroy(markerA);
-            if (markerB != null) Destroy(markerB);
-
-            GameObject explosion = Instantiate(explosionEffectPrefab, centerPoint.position, Quaternion.identity);
-            Destroy(explosion, 1f); // 1초 후 폭발 효과 제거
-
-            ScoreManager.Instance.AddScore(scorePerSuccess); // 점수 추가
-            Debug.Log("Success! Score: " + ScoreManager.Instance.GetCurrentScore());
-
-            countdownText.text = "Success! + " + scorePerSuccess + " points";
-        }
-        else
-        {
-            Debug.Log("Keep trying!");
-        }
-    }
-
-    Vector3 GetPositionOnCircle(float angle)
-    {
-        float x = centerPoint.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * 5f; // 반지름 5 가정
-        float y = centerPoint.position.y + Mathf.Sin(angle * Mathf.Deg2Rad) * 5f;
-        return new Vector3(x, y, 0);
-    }
-
-    void OrientMarkerTowardsCenter(GameObject marker)
-    {
-        // 원의 중심점을 향해 마커가 바라보도록 설정합니다.
-        Vector3 directionToCenter = (centerPoint.position - marker.transform.position).normalized;
-        marker.transform.rotation = Quaternion.LookRotation(Vector3.forward, directionToCenter);
-    
-    }
-
     void RemoveMarkers()
     {
         if (markerA != null)
@@ -103,6 +105,18 @@ public class RandomMarkers : MonoBehaviour
         {
             Destroy(markerB);
         }
-        Debug.Log("Markers removed after time out or success.");
+    }
+
+    Vector3 GetPositionOnCircle(float angle)
+    {
+        float x = centerPoint.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * 3f; // 반지름 3 가정
+        float y = centerPoint.position.y + Mathf.Sin(angle * Mathf.Deg2Rad) * 3f;
+        return new Vector3(x, y, 0);
+    }
+
+    void OrientMarkerTowardsCenter(GameObject marker)
+    {
+        Vector3 directionToCenter = (centerPoint.position - marker.transform.position).normalized;
+        marker.transform.rotation = Quaternion.LookRotation(Vector3.forward, directionToCenter);
     }
 }

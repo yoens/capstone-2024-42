@@ -8,6 +8,9 @@ public class NoteJudgment : MonoBehaviour
     public Transform judgmentLine_Y;
     public Transform judgmentLine_G;
     public Transform judgmentLine_R;
+    public GameObject effectPrefab_Y; 
+    public GameObject effectPrefab_G; 
+    public GameObject effectPrefab_R;
 
     public float perfectThreshold = 0.05f; // Perfect 판정 거리
     public float greatThreshold = 0.1f; // Great 판정 거리
@@ -79,7 +82,7 @@ public class NoteJudgment : MonoBehaviour
     }
 
     // JudgeClosestNote 메소드에 특정 판정선을 매개변수로 받도록 변경합니다.
-    private void JudgeClosestNote(string noteType, Transform specificJudgmentLine)
+    public void JudgeClosestNote(string noteType, Transform specificJudgmentLine)
     {
         var notes = notesInPlay.Where(note => note.tag == noteType).ToList();
         GameObject closestNote = null;
@@ -99,10 +102,32 @@ public class NoteJudgment : MonoBehaviour
         {
             string judgment = DetermineJudgment(minDistance);
             Debug.Log(noteType + " " + judgment);
+
+            // 이펙트 생성 및 0.3초 후 제거
+            GameObject effectPrefab = GetEffectPrefab(noteType);
+            if (effectPrefab != null)
+            {
+                Quaternion rotation = Quaternion.Euler(0, 0, 315);
+                GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, rotation);
+                Destroy(effect, 1f);  // 0.3초 후 이펙트 자동 제거
+                Debug.Log("Effect created for " + noteType); 
+            }
+
             Destroy(closestNote);
             notesInPlay.Remove(closestNote);
         }
     }
+    private GameObject GetEffectPrefab(string noteType)
+    {
+        switch (noteType)
+        {
+            case "Note_Y": return effectPrefab_Y;
+            case "Note_G": return effectPrefab_G;
+            case "Note_R": return effectPrefab_R;
+            default: return null;
+        }
+    }
+
 
     private string DetermineJudgment(float distance)
     {
