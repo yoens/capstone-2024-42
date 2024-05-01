@@ -5,7 +5,7 @@ using UnityEngine;
 public class DelayMusic : MonoBehaviour
 {
     public AudioSource audioSource; // AudioSource 컴포넌트
-    public float delay = 1.0f; // 오디오 재생을 지연시킬 시간 (초 단위)
+    public float delay = 2.0f; // 오디오 재생을 지연시킬 시간 (초 단위)
 
     void Start()
     {

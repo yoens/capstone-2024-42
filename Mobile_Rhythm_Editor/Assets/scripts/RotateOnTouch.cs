@@ -31,7 +31,7 @@ public class RotateOnTouch : MonoBehaviour
                     float currentAngle = transform.eulerAngles.z;  // Z축을 기준으로 현재 각도를 얻습니다.
                     if (randomMarkers != null)
                     {
-                        randomMarkers.CheckSuccess(currentAngle);
+                        randomMarkers.UpdateRotation(currentAngle);  // 수정된 메소드 호출
                     }
                 }
             }
