@@ -24,5 +24,10 @@ public class CharacterSelect : MonoBehaviour
         image.sprite = sprites[id];
         panel.gameObject.SetActive(true);
     }
+
+    public void touch_character_select_button()
+    {
+        User.character = characterId;
+    }
 }
 
