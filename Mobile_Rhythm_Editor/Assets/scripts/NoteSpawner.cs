@@ -6,8 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class NoteData
 {
-    public float time; // 노트가 나타날 시간
-    public string type; // 노트의 타입
+    public float time;
+    public string type;
 }
 
 [System.Serializable]
@@ -18,17 +18,20 @@ public class NoteDataCollection
 
 public class NoteSpawner : MonoBehaviour
 {
-    public AudioSource audioSource; // 게임의 배경 음악 오디오 소스
-    public GameObject[] notePrefabs; // 노트 프리팹 배열
-    private List<NoteData> notesToSpawn; // 스폰할 노트 데이터 리스트
-    public string jsonFilePath = "Assets/Guilty Bear_bpm120_Am.json";  // JSON 파일 경로
-    private Dictionary<string, Transform> spawnPointMap; // 노트 타입별 스폰 위치
-    public Transform[] spawnPoints; // Unity 인스펙터에서 설정할 스폰 포인트 배열
-    public Transform centerPoint; // 원의 중심점
+    public AudioSource audioSource;
+    public ObjectPoolManager poolManager;
+    public string jsonFilePath = "Assets/Guilty Bear_bpm120_Am.json";
+    private List<NoteData> notesToSpawn;
+    public Transform[] spawnPoints;
+    public Transform centerPoint;
+    private Dictionary<string, int> typeToIndexMap = new Dictionary<string, int> {
+        { "Note_R", 2 }, 
+        { "Note_G", 1 }, 
+        { "Note_Y", 0 }
+    };
 
     void Start()
     {
-        InitializeSpawnPoints();
         LoadNotesData();
         audioSource.Play();
     }
@@ -59,38 +62,24 @@ public class NoteSpawner : MonoBehaviour
         }
     }
 
-    void InitializeSpawnPoints()
-    {
-        spawnPointMap = new Dictionary<string, Transform>();
-        for (int i = 0; i < notePrefabs.Length; i++)
-        {
-            spawnPointMap[notePrefabs[i].name] = spawnPoints[i];
-        }
-    }
-
     void SpawnNote(NoteData noteData)
     {
-        GameObject prefab = notePrefabs.FirstOrDefault(p => p.name == noteData.type);
-        if (prefab != null)
+        GameObject note = poolManager.GetNote(noteData.type);
+        if (!typeToIndexMap.TryGetValue(noteData.type, out int spawnIndex) || spawnIndex >= spawnPoints.Length)
         {
-            Transform spawnLocation = spawnPointMap[noteData.type];
-            GameObject spawnedNote = Instantiate(prefab, spawnLocation.position, Quaternion.identity);
-            InitializeCircularMotion(spawnedNote, spawnLocation);
+            Debug.LogError("Invalid note type or spawn index out of range: " + noteData.type);
+            return;
         }
-        else
-        {
-            Debug.LogError("Prefab not found for type: " + noteData.type);
-        }
-    }
 
-    void InitializeCircularMotion(GameObject note, Transform spawnLocation)
-    {
+        Transform spawnLocation = spawnPoints[spawnIndex];
+        note.transform.position = spawnLocation.position;
+
         CircularMotion motion = note.GetComponent<CircularMotion>();
         if (motion == null)
         {
             motion = note.AddComponent<CircularMotion>();
         }
         motion.centerPoint = centerPoint;
-        motion.Initialize(spawnLocation.position); // 원의 중심점과 스폰 위치를 설정하여 원형 이동을 초기화
+        motion.Initialize(spawnLocation.position);
     }
 }
