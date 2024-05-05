@@ -1,10 +1,10 @@
 using UnityEngine;
-using TMPro; // TextMesh Pro 네임스페이스 추가
+using TMPro; 
 public class ComboManager : MonoBehaviour
 {
     public static ComboManager Instance { get; private set;}
     public TextMeshProUGUI comboText; // 점수를 표시할 TextMeshProUGUI
-
+    public int MaxCombo {get; set;}
     private int currentCombo = 0; // 현재 점수
 
     private void Awake()
@@ -22,14 +22,18 @@ public class ComboManager : MonoBehaviour
     private int currentComboIndex = 0;
     void Start()
     {
-        UpdateComboText(); // 시작할 때 점수 텍스트 업데이트
+        UpdateComboText(); 
     }
 
     // 점수를 추가하는 메서드
     public void AddCombo(int combo)
     {
         currentCombo += combo;
-        UpdateComboText(); // 점수 텍스트 업데이트
+        if(currentCombo > MaxCombo)
+        {
+            MaxCombo = currentCombo;
+        }
+        UpdateComboText(); 
     }
     public void ResetCombo()
     {
