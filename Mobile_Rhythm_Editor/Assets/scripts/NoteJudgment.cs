@@ -88,7 +88,7 @@ public class NoteJudgment : MonoBehaviour
             GameObject effectPrefab = GetEffectPrefab(noteType);
             if (effectPrefab != null)
             {
-                GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, Quaternion.Euler(0, 0, 315));
+                GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, Quaternion.Euler(0, 0, 0));
                 Destroy(effect, 1f);
                 Debug.Log("Effect created for " + noteType);
             }
@@ -146,6 +146,6 @@ public class NoteJudgment : MonoBehaviour
         if (ComboManager.Instance != null)
             ComboManager.Instance.ResetCombo();  // 콤보 초기화
         if (LifeManager.Instance != null)
-            LifeManager.Instance.Minus(5);  // 게임 매니저 점수 감소 및 게임 오버 검사
+            LifeManager.Instance.Minus(0);  // 게임 매니저 점수 감소 및 게임 오버 검사
     }
 }

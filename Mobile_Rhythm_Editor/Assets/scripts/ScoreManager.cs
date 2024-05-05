@@ -5,7 +5,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
     public TextMeshProUGUI scoreText; // 점수를 표시할 TextMeshProUGUI
-
+    public int Score {get; set;}
     private int currentScore = 0; // 현재 점수
 
     private void Awake()
@@ -27,9 +27,10 @@ public class ScoreManager : MonoBehaviour
     }
 
     // 점수를 추가하는 메서드
-    public void AddScore(int score)
+    public void AddScore(int point)
     {
-        currentScore += score;
+        currentScore += point;
+        Score = currentScore;
         UpdateScoreText(); // 점수 텍스트 업데이트
     }
 

@@ -35,6 +35,9 @@ public class LifeManager : MonoBehaviour
     public void Plus(int points)
     {
         Point += points;
+        if(Point >= 100){
+            Point = 100;
+        }
         UpdateSlider();
     }
 
