@@ -12,13 +12,14 @@ public class SongScrollView : MonoBehaviour
 
     public VerticalLayoutGroup VLG;
 
-    public TMP_Text NameLabel;
-    public string[] ItemNames;
-
     bool isSnapped;
 
     public float snapForce;
     float snapSpeed;
+
+    public Sprite[] album;
+    public Image main_image;
+
     void Start()
     {
         //isSnapped = false;
@@ -42,7 +43,7 @@ public class SongScrollView : MonoBehaviour
                 isSnapped = true;
             }*/
             contentPanel.localPosition = new Vector3(contentPanel.localPosition.x, (currentItem * (sampleListItem.rect.height + VLG.spacing)), contentPanel.localPosition.z);
-            NameLabel.text = ItemNames[currentItem];
+            main_image.sprite = album[Song.user_song[currentItem]];
         }
 
         /*if(scrollRect.velocity.magnitude > 200)

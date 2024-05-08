@@ -12,18 +12,22 @@ public class ShopBuy : MonoBehaviour
     public int original_song_count = 5;
 
     public TMP_Text Sname;
-    public string[] song_name;
+    public TMP_Text Aname;
+    public TMP_Text Dif;
 
     public void touched_song(int id)
     {
         song_id = id;
-        Sname.text = song_name[id];
+        Sname.text = Song.s_name[id];
+        Aname.text = Song.artist[id];
+        Dif.text = Song.difficulty[id];
         panel.gameObject.SetActive(true);
     }
 
     public void touched_buy_song()
     {
-        User.song[original_song_count + song_id] = 1;
+        Song.user_song[Song.user_song_count++] = song_id;
+        Song.user_song_sort();
         panel.gameObject.SetActive(false);
     }
 }
