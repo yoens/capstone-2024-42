@@ -88,7 +88,7 @@ public class NoteJudgment : MonoBehaviour
             GameObject effectPrefab = GetEffectPrefab(noteType);
             if (effectPrefab != null)
             {
-                GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, Quaternion.Euler(0, 0, 0));
+                GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, Quaternion.Euler(0, 0, 315));
                 Destroy(effect, 1f);
                 Debug.Log("Effect created for " + noteType);
             }

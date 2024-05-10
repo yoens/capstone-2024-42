@@ -40,11 +40,11 @@ public class BackendGameData
             if (callback.IsSuccess())
             {
                 gameDataRowInDate = callback.GetInDate();
-                Debug.Log("³» User InfoÀÇ indate : " + gameDataRowInDate);
+                Debug.Log("ë‚´ User Infoì˜ indate : " + gameDataRowInDate);
             }
             else
             {
-                Debug.LogError("°ÔÀÓ Á¤º¸ »ğÀÔ ½ÇÆĞ : " + callback.ToString());
+                Debug.LogError("ê²Œì„ ì •ë³´ ì‚½ì… ì‹¤íŒ¨ : " + callback.ToString());
             }
         });
     }
@@ -64,7 +64,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+                        Debug.Log("ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
                         return;
                     }
                     else
@@ -85,7 +85,7 @@ public class BackendGameData
     {
         if(userGameData == null)
         {
-            Debug.Log("Insert or Load ¸ÕÀú ÇÊ¿äÇÔ");
+            Debug.Log("Insert or Load ë¨¼ì € í•„ìš”í•¨");
             return;
         }
 
@@ -93,17 +93,17 @@ public class BackendGameData
 
         if(string.IsNullOrEmpty(gameDataRowInDate))
         {
-            Debug.LogError("À¯ÀúÀÇ inDate Á¤º¸°¡ X");
+            Debug.LogError("ìœ ì €ì˜ inDate ì •ë³´ê°€ X");
         }
         else
         {
-            Debug.Log($"{gameDataRowInDate}ÀÇ °ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¿äÃ»");
+            Debug.Log($"{gameDataRowInDate}ì˜ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ìš”ì²­");
 
             Backend.GameData.UpdateV2("User", gameDataRowInDate, Backend.UserInDate, param, callback =>
             {
                 if(callback.IsSuccess())
                 {
-                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¼º°ø : {callback}");
+                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì„±ê³µ : {callback}");
 
                     action?.Invoke();
 
@@ -111,7 +111,7 @@ public class BackendGameData
                 }
                 else
                 {
-                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ½ÇÆĞ : {callback}");
+                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì‹¤íŒ¨ : {callback}");
                 }
             });
         }

@@ -64,7 +64,7 @@ public class NoteSpawner : MonoBehaviour
 
     void SpawnNote(NoteData noteData)
     {
-        GameObject note = poolManager.GetNote(noteData.type);
+        GameObject note = poolManager.GetObject(noteData.type);
         if (!typeToIndexMap.TryGetValue(noteData.type, out int spawnIndex) || spawnIndex >= spawnPoints.Length)
         {
             Debug.LogError("Invalid note type or spawn index out of range: " + noteData.type);

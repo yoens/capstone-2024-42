@@ -5,7 +5,7 @@ using System.Collections;
 public class RandomMarkers : MonoBehaviour
 {
     public Transform centerPoint; // 회전의 중심점
-    public GameObject markerPrefab; // 마커 프리팹
+    public ObjectPool markerPool; // 마커용 오브젝트 풀
     public GameObject explosionEffectPrefab; // 터지는 효과 프리팹
     public TextMeshProUGUI countdownText; // TextMesh Pro UI 텍스트
     public float markerLifetime = 3f; // 마커의 생존 시간
@@ -43,42 +43,9 @@ public class RandomMarkers : MonoBehaviour
             ActivateMarkers(); // 마커 활성화
             yield return new WaitForSeconds(markerLifetime); // 마커의 생존 시간동안 대기
 
-            if (markerA != null || markerB != null) // 시간이 지나면 마커 자동 제거
-            {
-                RemoveMarkers();
-            }
+            RemoveMarkers();
             isRotating = false; // 회전 종료
         }
-    }
-
-    public void UpdateRotation(float currentAngle)
-    {
-        if (!isRotating) return; // 회전 중이 아니면 처리하지 않음
-
-        float deltaAngle = Mathf.DeltaAngle(lastAngle, currentAngle);
-        accumulatedRotation += Mathf.Abs(deltaAngle);
-
-        if (accumulatedRotation >= angleBetweenMarkers) // 누적 회전 각도가 설정 각도를 초과하면 성공
-        {
-            CheckSuccess();
-        }
-
-        lastAngle = currentAngle;
-    }
-
-    void CheckSuccess()
-    {
-        if (markerA != null) Destroy(markerA);
-        if (markerB != null) Destroy(markerB);
-
-        GameObject explosion = Instantiate(explosionEffectPrefab, centerPoint.position, Quaternion.identity);
-        Destroy(explosion, 1f); // 1초 후 폭발 효과 제거
-
-        ScoreManager.Instance.AddScore(scorePerSuccess); // 점수 추가
-        //countdownText.text = "Success! + " + scorePerSuccess + " points";
-
-        accumulatedRotation = 0f; // 누적 회전 초기화
-        isRotating = false; 
     }
 
     void ActivateMarkers()
@@ -86,23 +53,34 @@ public class RandomMarkers : MonoBehaviour
         Vector3 positionA = GetPositionOnCircle(baseAngle);
         Vector3 positionB = GetPositionOnCircle(baseAngle + angleBetweenMarkers);
 
-        markerA = Instantiate(markerPrefab, positionA, Quaternion.identity);
-        markerB = Instantiate(markerPrefab, positionB, Quaternion.identity);
+        markerA = markerPool.GetObject();
+        markerA.transform.position = positionA;
+        markerA.transform.rotation = Quaternion.LookRotation(Vector3.forward, centerPoint.position - positionA);
 
-        OrientMarkerTowardsCenter(markerA);
-        OrientMarkerTowardsCenter(markerB);
+        markerB = markerPool.GetObject();
+        markerB.transform.position = positionB;
+        markerB.transform.rotation = Quaternion.LookRotation(Vector3.forward, centerPoint.position - positionB);
     }
 
     void RemoveMarkers()
     {
         if (markerA != null)
         {
-            Destroy(markerA);
+            markerPool.ReturnObject(markerA);
+            markerA = null;
         }
         if (markerB != null)
         {
-            Destroy(markerB);
+            markerPool.ReturnObject(markerB);
+            markerB = null;
         }
+    }
+    public void UpdateRotation(float currentAngle)
+    {
+        // 현재 각도에 따른 추가 로직 구현
+        // 예: 현재 각도를 기반으로 마커의 상태를 업데이트하거나, 특정 조건을 체크
+        Debug.Log("Current Angle Updated: " + currentAngle);
+        // 여기서 각도를 사용하여 게임 로직을 업데이트할 수 있습니다.
     }
 
     Vector3 GetPositionOnCircle(float angle)
@@ -110,11 +88,5 @@ public class RandomMarkers : MonoBehaviour
         float x = centerPoint.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * 3f; // 반지름 3 가정
         float y = centerPoint.position.y + Mathf.Sin(angle * Mathf.Deg2Rad) * 3f;
         return new Vector3(x, y, 0);
-    }
-
-    void OrientMarkerTowardsCenter(GameObject marker)
-    {
-        Vector3 directionToCenter = (centerPoint.position - marker.transform.position).normalized;
-        marker.transform.rotation = Quaternion.LookRotation(Vector3.forward, directionToCenter);
     }
 }
