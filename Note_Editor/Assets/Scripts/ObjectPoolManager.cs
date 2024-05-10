@@ -5,7 +5,6 @@ public class ObjectPoolManager : MonoBehaviour
     public ObjectPool poolNoteG;
     public ObjectPool poolNoteY;
     public ObjectPool poolNoteR;
-    public ObjectPool poolMarker;  // 마커를 위한 오브젝트 풀 추가
 
     public GameObject GetObject(string type)
     {
@@ -17,16 +16,16 @@ public class ObjectPoolManager : MonoBehaviour
                 return poolNoteY.GetObject();
             case "Note_R":
                 return poolNoteR.GetObject();
-            case "Marker":
-                return poolMarker.GetObject();  // 마커용 풀을 사용
             default:
-                Debug.LogError("Invalid type requested: " + type);
+                Debug.LogError("노트타입: " + type);
                 return null;
         }
     }
 
     public void ReturnObject(GameObject obj, string type)
     {
+        ResetObjectState(obj);  
+
         switch (type)
         {
             case "Note_G":
@@ -38,12 +37,26 @@ public class ObjectPoolManager : MonoBehaviour
             case "Note_R":
                 poolNoteR.ReturnObject(obj);
                 break;
-            case "Marker":
-                poolMarker.ReturnObject(obj);  // 마커 반환
-                break;
             default:
-                Debug.LogError("Invalid type returned: " + type);
+                Debug.LogError("노트타입: " + type);
                 break;
         }
+    }
+
+    private void ResetObjectState(GameObject obj)
+    {
+        obj.SetActive(false); 
+        obj.transform.position = Vector3.zero;  
+        obj.transform.rotation = Quaternion.identity;  
+
+        Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+      
+       
     }
 }
