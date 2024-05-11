@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 0}
-  radius: 1
   speed: 60
 --- !u!61 &7211950546085385419
 BoxCollider2D:

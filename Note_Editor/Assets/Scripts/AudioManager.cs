@@ -6,6 +6,7 @@ using TMPro;
 
 public class AudioManager : MonoBehaviour
 {
+
     private AudioSource audioSource;
     public TMP_Text musicTimeText;
 
@@ -49,6 +50,10 @@ public class AudioManager : MonoBehaviour
     public float GetMusicTime()
     {
         return audioSource.time;
+    }
+    public float GetClipLength() 
+    {
+        return audioSource.clip.length;
     }
 
     private void UpdateMusicTimeUI(float currentTime)
