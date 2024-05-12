@@ -34,4 +34,9 @@ public class ChangeScene : MonoBehaviour
     {
         SceneManager.LoadScene("Shop_Scene");
     }
+
+    public void Change_Ranking_Scene()
+    {
+        SceneManager.LoadScene("Ranking_Scene");
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +15,8 @@ public class Song : MonoBehaviour
     public int[] score; // 클리어 한 곡의 최대 점수
     public int[] combo; // 클리어 한 곡의 최대 콤보 수
 
-    public static void user_song_sort()
+    public void user_song_sort()
     {
-        //Array.sort(user_song, 0, user_song_count - 1);
+        Array.Sort(user_song, 0, user_song_count - 1);
     }
 }

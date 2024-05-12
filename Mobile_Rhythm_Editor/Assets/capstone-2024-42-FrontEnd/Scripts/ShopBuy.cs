@@ -27,7 +27,6 @@ public class ShopBuy : MonoBehaviour
     public void touched_buy_song()
     {
         Song.user_song[Song.user_song_count++] = song_id;
-        Song.user_song_sort();
         panel.gameObject.SetActive(false);
     }
 }

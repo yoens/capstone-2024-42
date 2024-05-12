@@ -28,6 +28,7 @@ public class User : MonoBehaviour
     {
         Text_user_level.text = user_level.ToString();
         Text_gold.text = gold.ToString();
+        Text_user_name.text = user_name.ToString();
     }
 
     public void touch_character_select_button(int a)

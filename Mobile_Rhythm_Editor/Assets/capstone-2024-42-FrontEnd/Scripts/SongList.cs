@@ -10,6 +10,7 @@ public class SongList : MonoBehaviour
     public GameObject[] song_object = new GameObject[10];
 
     public TMP_Text[] list_name;
+    public TMP_Text[] list_difficulty;
     public Image list_image;
 
     void Start() // 곡 선택 창에서 자신이 보유한 곡들만 보여주는 기능
@@ -20,6 +21,7 @@ public class SongList : MonoBehaviour
             a = Song.user_song[i];
 
             list_name[a].text = Song.s_name[a];
+            list_difficulty[a].text = Song.difficulty[a];
             song_object[a].gameObject.SetActive(true);
 
         }
