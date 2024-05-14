@@ -39,4 +39,9 @@ public class ChangeScene : MonoBehaviour
     {
         SceneManager.LoadScene("Ranking_Scene");
     }
+
+    public void Change_Ingame_Scene()
+    {
+        SceneManager.LoadScene("Ingame");
+    }
 }
