@@ -10,10 +10,10 @@ public class Song : MonoBehaviour
     public static string[] difficulty = { "Easy", "Normal", "Hard", "Easy", "Normal", "Hard", "Easy", "Normal", "Hard", "Easy", };
 
     public static int user_song_count = 5;
-    public static int[] user_song = {0, 1, 2, 3, 4, 0, 0, 0, 0, 0}; // À¯Àú°¡ º¸À¯ÇÑ °î ¸®½ºÆ® (0ÀÌ¸é ¹Ìº¸À¯, 1ÀÌ¸é º¸À¯)
-    public int[] clear; // °î Å¬¸®¾î ¸®½ºÆ® (1ÀÌ¸é Å¬¸®¾î)
-    public static int[] score = { 100000, 0, 99999, 12345, 0, 0, 0, 0, 0, 0 }; // Å¬¸®¾î ÇÑ °îÀÇ ÃÖ´ë Á¡¼ö
-    public int[] combo; // Å¬¸®¾î ÇÑ °îÀÇ ÃÖ´ë ÄŞº¸ ¼ö
+    public static int[] user_song = {0, 1, 2, 3, 4, 0, 0, 0, 0, 0}; // ìœ ì €ê°€ ë³´ìœ í•œ ê³¡ ë¦¬ìŠ¤íŠ¸ (0ì´ë©´ ë¯¸ë³´ìœ , 1ì´ë©´ ë³´ìœ )
+    public int[] clear; // ê³¡ í´ë¦¬ì–´ ë¦¬ìŠ¤íŠ¸ (1ì´ë©´ í´ë¦¬ì–´)
+    public static int[] score = { 100000, 0, 99999, 12345, 0, 0, 0, 0, 0, 0 }; // í´ë¦¬ì–´ í•œ ê³¡ì˜ ìµœëŒ€ ì ìˆ˜
+    public int[] combo; // í´ë¦¬ì–´ í•œ ê³¡ì˜ ìµœëŒ€ ì½¤ë³´ ìˆ˜
 
     public void user_song_sort()
     {

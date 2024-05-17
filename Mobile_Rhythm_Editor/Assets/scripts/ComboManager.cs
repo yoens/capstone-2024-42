@@ -35,7 +35,7 @@ public class ComboManager : MonoBehaviour
         }
         UpdateComboText(); 
     }
-    public void ResetCombo()
+    public void ResetCombo_play()
     {
         currentCombo = 0;
         UpdateComboText();
@@ -55,5 +55,13 @@ public class ComboManager : MonoBehaviour
     {
         return currentCombo;
     }
+    //초기화
+    public void ResetCombo()
+    {
+        MaxCombo = 0;
+        currentCombo = 0;
+        UpdateComboText();
+    }
+
 }
 
