@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -9,7 +8,7 @@ public class LifeManager : MonoBehaviour
     public static LifeManager Instance { get; private set; }
     public int Point = 100; // 초기 포인트
     public AudioSource audioSource; // 노래를 재생할 오디오 소스
-    public TextMeshProUGUI resultText; // 결과를 표시할 TMP 텍스트
+    public Text resultText; // 결과를 표시할 TMP 텍스트
     public Slider scoreSlider; // 점수를 표시할 슬라이더
 
     private void Awake()
