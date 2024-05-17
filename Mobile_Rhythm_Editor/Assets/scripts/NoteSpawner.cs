@@ -20,7 +20,7 @@ public class NoteSpawner : MonoBehaviour
 {
     public AudioSource audioSource;
     public ObjectPoolManager poolManager;
-    public string jsonFilePath = "Assets/Guilty Bear_bpm120_Am.json";
+    public string jsonFilePath = "Assets/Ripple - Everyday  DnB  NCS - Copyright Free Music.json";
     private List<NoteData> notesToSpawn;
     public Transform[] spawnPoints;
     public Transform centerPoint;

@@ -12,9 +12,9 @@ public class RandomMarkers : MonoBehaviour
     public ObjectPoolManager objectPoolManager; // 오브젝트 풀 매니저 참조
 
     private GameObject markerA, markerB;
-    private float lastAngle = 0f; // 마지막 확인된 각도
     private bool isRotating = false; // 회전이 시작되었는지 확인
-    private float targetAngle; // 두 번째 마커의 각도
+    private float targetAngle; // 두 번째 마커의 타겟 각도
+    private bool shouldRotateRight; // 올바른 회전 방향이 오른쪽인지
 
     void Start()
     {
@@ -50,6 +50,7 @@ public class RandomMarkers : MonoBehaviour
         OrientMarkerTowardsCenter(markerA);
 
         float randomAngle = Random.Range(-180f, 180f);
+        shouldRotateRight = randomAngle > 0; // 오른쪽으로 회전해야 하는지 결정
         markerB = objectPoolManager.GetObject("Marker");
         markerB.transform.position = GetPositionOnCircle(randomAngle); // 두 번째 마커 위치
         OrientMarkerTowardsCenter(markerB);
@@ -60,8 +61,8 @@ public class RandomMarkers : MonoBehaviour
     {
         if (!isRotating) return;
 
-        // 올바른 방향으로 충분히 회전했는지 확인
-        if ((targetAngle > 0 && currentAngle >= targetAngle) || (targetAngle < 0 && currentAngle <= targetAngle))
+        if (shouldRotateRight && currentAngle >= targetAngle ||
+            !shouldRotateRight && currentAngle <= targetAngle)
         {
             CorrectRotation();
         }
@@ -69,31 +70,19 @@ public class RandomMarkers : MonoBehaviour
 
     void CorrectRotation()
     {
-        // 점수 추가
         ScoreManager.Instance.AddScore(scorePerSuccess);
-        Debug.Log("Correct rotation! Score: " + scorePerSuccess);
-
-        // 폭발 효과 생성
         if (explosionEffectPrefab != null)
         {
             GameObject explosion = Instantiate(explosionEffectPrefab, centerPoint.position, Quaternion.identity);
             Destroy(explosion, 1f); // 1초 후 폭발 효과 제거
         }
-        isRotating = false; // 회전 종료, 누적 각도 초기화
+        isRotating = false;
     }
 
     void RemoveMarkers()
     {
-        if (markerA != null)
-        {
-            objectPoolManager.ReturnObject(markerA, "Marker");
-            markerA = null;
-        }
-        if (markerB != null)
-        {
-            objectPoolManager.ReturnObject(markerB, "Marker");
-            markerB = null;
-        }
+        if (markerA != null) objectPoolManager.ReturnObject(markerA, "Marker");
+        if (markerB != null) objectPoolManager.ReturnObject(markerB, "Marker");
     }
 
     Vector3 GetPositionOnCircle(float angle)

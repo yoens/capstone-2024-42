@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 using BackEnd;
 
 public class ClearSceneController : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI comboText;
+    public Text scoreText;
+    public Text comboText;
 
     void Start()
     {

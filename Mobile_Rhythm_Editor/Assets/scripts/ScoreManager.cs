@@ -1,10 +1,10 @@
 using UnityEngine;
-using TMPro; // TextMesh Pro 네임스페이스 추가
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
-    public TextMeshProUGUI scoreText; // 점수를 표시할 TextMeshProUGUI
+    public Text scoreText; // 점수를 표시할 TextMeshProUGUI
     public int Score {get; set;}
     private int currentScore = 0; // 현재 점수
 

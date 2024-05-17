@@ -12,9 +12,9 @@ public class RotateOnTouch : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
+            Touch touch = Input.GetTouch(0); // 첫 번째 터치를 가져옵니다.
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-            touchPos.z = 0;  // Z축 조정
+            touchPos.z = 0;  // Z축 조정, 원판이 XY 평면에 있을 경우
 
             if (touch.phase == TouchPhase.Moved && touchCollider.OverlapPoint(touchPos))
             {
@@ -22,7 +22,7 @@ public class RotateOnTouch : MonoBehaviour
                 float rotation = touchDeltaPosition.x * rotationSpeed * sensitivity * Time.deltaTime;
                 transform.RotateAround(centerPoint.position, Vector3.forward, -rotation);
 
-                // 현재 각도 계산 및 RandomMarkers 스크립트에 전달
+                // 현재 각도를 계산하고 RandomMarkers 스크립트에 전달
                 float currentAngle = transform.eulerAngles.z;
                 if (randomMarkers != null)
                 {

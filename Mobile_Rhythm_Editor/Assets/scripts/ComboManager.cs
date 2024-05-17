@@ -1,10 +1,11 @@
 using UnityEngine;
-using TMPro; 
+using UnityEngine.UI; // TextMeshPro 대신 Unity UI를 사용합니다.
+
 public class ComboManager : MonoBehaviour
 {
-    public static ComboManager Instance { get; private set;}
-    public TextMeshProUGUI comboText; // 점수를 표시할 TextMeshProUGUI
-    public int MaxCombo {get; set;}
+    public static ComboManager Instance { get; private set; }
+    public Text comboText; // 점수를 표시할 Text 컴포넌트
+    public int MaxCombo { get; set; }
     private int currentCombo = 0; // 현재 점수
 
     private void Awake()
@@ -19,22 +20,23 @@ public class ComboManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private int currentComboIndex = 0;
+
     void Start()
     {
-        UpdateComboText(); 
+        UpdateComboText();
     }
 
     // 점수를 추가하는 메서드
     public void AddCombo(int combo)
     {
         currentCombo += combo;
-        if(currentCombo > MaxCombo)
+        if (currentCombo > MaxCombo)
         {
             MaxCombo = currentCombo;
         }
-        UpdateComboText(); 
+        UpdateComboText();
     }
+
     public void ResetCombo_play()
     {
         currentCombo = 0;
@@ -55,13 +57,12 @@ public class ComboManager : MonoBehaviour
     {
         return currentCombo;
     }
-    //초기화
+
+    // 초기화
     public void ResetCombo()
     {
         MaxCombo = 0;
         currentCombo = 0;
         UpdateComboText();
     }
-
 }
-
