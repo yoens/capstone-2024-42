@@ -48,4 +48,11 @@ public class ScoreManager : MonoBehaviour
     {
         return currentScore;
     }
+    //초기화
+    public void ResetScore()
+    {
+        Score = 0;
+        UpdateScoreText();
+    }
+
 }

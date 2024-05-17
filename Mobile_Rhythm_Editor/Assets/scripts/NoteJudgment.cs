@@ -15,8 +15,14 @@ public class NoteJudgment : MonoBehaviour
     public float greatThreshold = 0.1f;
     public float goodThreshold = 0.15f;
     public float missThreshold = 0.2f;
+    public CharacterSpriteManager spriteManager;
 
     private List<GameObject> notesInPlay = new List<GameObject>();
+
+    private void Awake()
+    {
+        spriteManager = FindObjectOfType<CharacterSpriteManager>(); // 씬에서 스프라이트 매니저 찾기
+    }
 
     void Update()
     {
@@ -80,19 +86,20 @@ public class NoteJudgment : MonoBehaviour
             }
         }
 
-        if (closestNote != null && minDistance <= goodThreshold)
+        if (closestNote != null)
         {
             string judgment = DetermineJudgment(minDistance);
             Debug.Log(noteType + " " + judgment);
-
-            GameObject effectPrefab = GetEffectPrefab(noteType);
-            if (effectPrefab != null)
+            if (judgment != "Miss")
             {
-                GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, Quaternion.Euler(0, 0, 315));
-                Destroy(effect, 1f);
-                Debug.Log("Effect created for " + noteType);
+                GameObject effectPrefab = GetEffectPrefab(noteType);
+                if (effectPrefab != null)
+                {
+                    GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, Quaternion.Euler(0, 0, 315));
+                    Destroy(effect, 1f);
+                    Debug.Log("Effect created for " + noteType);
+                }
             }
-
             Destroy(closestNote);
             notesInPlay.Remove(closestNote);
         }
@@ -111,25 +118,33 @@ public class NoteJudgment : MonoBehaviour
 
     private string DetermineJudgment(float distance)
     {
+        string result;
         if (distance <= perfectThreshold)
         {
             PerformAction(100, 1, 1);
-            return "Perfect";
+            result = "Perfect";
         }
         else if (distance <= greatThreshold)
         {
             PerformAction(80, 1, 1);
-            return "Great";
+            result = "Great";
         }
         else if (distance <= goodThreshold)
         {
             PerformAction(50, 1, 1);
-            return "Good";
+            result = "Good";
         }
         else
         {
-            return "Miss";
+            PerformMissAction();
+            result = "Miss";
         }
+        if (spriteManager != null)
+        {
+            spriteManager.ChangeSprite(result);
+        }
+        return result;
+
     }
 
     private void PerformAction(int score, int combo, int points)
@@ -141,11 +156,15 @@ public class NoteJudgment : MonoBehaviour
     private void PerformMissAction()
     {
         Debug.Log("Miss Action Triggered"); 
+        if (spriteManager != null)
+        {
+            spriteManager.ChangeSprite("Miss");
+        }
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.AddScore(0); 
         if (ComboManager.Instance != null)
-            ComboManager.Instance.ResetCombo();  // 콤보 초기화
+            ComboManager.Instance.ResetCombo_play();  // 콤보 초기화
         if (LifeManager.Instance != null)
-            LifeManager.Instance.Minus(0);  // 게임 매니저 점수 감소 및 게임 오버 검사
+            LifeManager.Instance.Minus(3);  // 게임 매니저 점수 감소 및 게임 오버 검사
     }
 }

@@ -17,6 +17,6 @@ public class ChangeScene_ingame : MonoBehaviour
 
     public void Change_Game_Scene()
     {
-        SceneManager.LoadScene("Game_Scene");
+        SceneManager.LoadScene("Ingame");
     }
 }
