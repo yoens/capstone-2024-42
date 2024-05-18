@@ -405,7 +405,7 @@ MonoBehaviour:
   m_text: "\uB2C9\uB124\uC784\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5847e9c371ea4fb4281e74f49edbe0f2, type: 2}
-  m_sharedMaterial: {fileID: 6552398467732431668, guid: 5847e9c371ea4fb4281e74f49edbe0f2, type: 2}
+  m_sharedMaterial: {fileID: 8350186413457244308, guid: 5847e9c371ea4fb4281e74f49edbe0f2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -445,9 +445,9 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 1
+  m_overflowMode: 3
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0

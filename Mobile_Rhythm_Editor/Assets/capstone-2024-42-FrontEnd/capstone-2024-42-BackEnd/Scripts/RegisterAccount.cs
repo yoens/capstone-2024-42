@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using BackEnd;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class RegisterAccount : LoginBase
 {
@@ -65,9 +66,23 @@ public class RegisterAccount : LoginBase
                 {
                     if(callback.IsSuccess())
                     {
+                        BackendGameData.Instance.UserDataInsert();
+
                         SetMessage($"계정 생성 성공. {inputFieldID.text}님 환영합니다.");
 
-                        BackendGameData.Instance.UserDataInsert();
+                        for (int i = 0; i < Constants.SONG_NUMBER; i++)
+                        {
+                            BackendGameData.Instance.PlayerSongDataInsert(i);
+                        }
+
+                        for (int i = 0; i < Constants.CHARACTER_NUMBER; i++)
+                        {
+                            BackendGameData.Instance.PlayerCharacterDataInsert(i);
+                        }
+
+//                        BackendChartData.LoadAllChart(); //Level, Song, Character 차트 불러오기
+
+//                        Utils.LoadScene(SceneNames.LobbyScene);
                     }
                 });
             }
@@ -99,7 +114,4 @@ public class RegisterAccount : LoginBase
             }
         });
     }
-
-
-
 }
