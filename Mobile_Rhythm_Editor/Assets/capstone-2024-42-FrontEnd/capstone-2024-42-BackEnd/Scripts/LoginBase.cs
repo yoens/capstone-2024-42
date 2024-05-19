@@ -32,7 +32,7 @@ public class LoginBase : MonoBehaviour
     {
         if(field.Trim().Equals(""))
         {
-            GuideForIncorrectlyEnteredData(image, $"\"{result}\" �ʵ带 ä���ּ���.");
+            GuideForIncorrectlyEnteredData(image, $"\"{result}\" ÇÊµå¸¦ Ã¤¿öÁÖ¼¼¿ä.");
 
             return true;
         }

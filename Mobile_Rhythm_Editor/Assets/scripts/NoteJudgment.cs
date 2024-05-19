@@ -72,7 +72,7 @@ public class NoteJudgment : MonoBehaviour
 
     private void JudgeClosestNote(string noteType, Transform specificJudgmentLine)
     {
-        var notes = notesInPlay.Where(note => note.tag == noteType).ToList();
+        var notes = notesInPlay.Where(note => note.tag == noteType && note.transform.position.y >= specificJudgmentLine.position.y - goodThreshold).ToList();
         GameObject closestNote = null;
         float minDistance = float.MaxValue;
 
@@ -153,9 +153,10 @@ public class NoteJudgment : MonoBehaviour
         if (ComboManager.Instance != null) ComboManager.Instance.AddCombo(combo);
         if (LifeManager.Instance != null) LifeManager.Instance.Plus(points);
     }
+
     private void PerformMissAction()
     {
-        Debug.Log("Miss Action Triggered"); 
+        Debug.Log("Miss Action Triggered");
         if (spriteManager != null)
         {
             spriteManager.ChangeSprite("Miss");
@@ -163,7 +164,7 @@ public class NoteJudgment : MonoBehaviour
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.AddScore(0); 
         if (ComboManager.Instance != null)
-            ComboManager.Instance.ResetCombo_play();  // 콤보 초기화
+            ComboManager.Instance.ResetCombo();  // 콤보 초기화
         if (LifeManager.Instance != null)
             LifeManager.Instance.Minus(3);  // 게임 매니저 점수 감소 및 게임 오버 검사
     }

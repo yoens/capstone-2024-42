@@ -11,9 +11,8 @@ public class RandomMarkers : MonoBehaviour
     public int scorePerSuccess = 100; // 성공 시 부여될 점수
     public ObjectPoolManager objectPoolManager; // 오브젝트 풀 매니저 참조
 
-    private GameObject markerA, markerB;
+    private GameObject markerA;
     private bool isRotating = false; // 회전이 시작되었는지 확인
-    private float targetAngle; // 두 번째 마커의 타겟 각도
     private bool shouldRotateRight; // 올바른 회전 방향이 오른쪽인지
 
     void Start()
@@ -35,7 +34,7 @@ public class RandomMarkers : MonoBehaviour
 
             countdownText.text = "";
             isRotating = true; // 회전 시작 표시
-            ActivateMarkers(); // 마커 활성화
+            ActivateMarker(); // 마커 활성화
             yield return new WaitForSeconds(markerLifetime); // 마커의 생존 시간동안 대기
 
             RemoveMarkers();
@@ -43,26 +42,19 @@ public class RandomMarkers : MonoBehaviour
         }
     }
 
-    void ActivateMarkers()
+    void ActivateMarker()
     {
+        shouldRotateRight = Random.value > 0.5f;
         markerA = objectPoolManager.GetObject("Marker");
-        markerA.transform.position = GetPositionOnCircle(0); // 첫 번째 마커 위치
-        OrientMarkerTowardsCenter(markerA);
-
-        float randomAngle = Random.Range(-180f, 180f);
-        shouldRotateRight = randomAngle > 0; // 오른쪽으로 회전해야 하는지 결정
-        markerB = objectPoolManager.GetObject("Marker");
-        markerB.transform.position = GetPositionOnCircle(randomAngle); // 두 번째 마커 위치
-        OrientMarkerTowardsCenter(markerB);
-        targetAngle = randomAngle; // 두 번째 마커의 타겟 각도 저장
+        markerA.transform.position = GetPositionOnCircle(0); // 마커 위치
+        OrientMarkerTowardsCenter(markerA, shouldRotateRight ? "Down" : "Up");
     }
 
-    public void UpdateRotation(float currentAngle)
+    public void UpdateRotation(float currentAngle, bool isRotatingRight)
     {
         if (!isRotating) return;
 
-        if (shouldRotateRight && currentAngle >= targetAngle ||
-            !shouldRotateRight && currentAngle <= targetAngle)
+        if (shouldRotateRight == isRotatingRight)
         {
             CorrectRotation();
         }
@@ -82,7 +74,6 @@ public class RandomMarkers : MonoBehaviour
     void RemoveMarkers()
     {
         if (markerA != null) objectPoolManager.ReturnObject(markerA, "Marker");
-        if (markerB != null) objectPoolManager.ReturnObject(markerB, "Marker");
     }
 
     Vector3 GetPositionOnCircle(float angle)
@@ -94,8 +85,10 @@ public class RandomMarkers : MonoBehaviour
                            0);
     }
 
-    void OrientMarkerTowardsCenter(GameObject marker)
+    void OrientMarkerTowardsCenter(GameObject marker, string direction)
     {
         marker.transform.rotation = Quaternion.LookRotation(Vector3.forward, centerPoint.position - marker.transform.position);
+        // Change the marker's appearance based on direction
+        marker.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/{direction}Arrow");
     }
 }

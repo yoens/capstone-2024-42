@@ -8,11 +8,17 @@ public class ClearSceneController : MonoBehaviour
 {
     public Text scoreText;
     public Text comboText;
+    public bool clear = true;
+    public int characterID;
+    public int characterLevel;
+    public int characterExp;
+    public int count;
 
     void Start()
     {
         int finalScore = ScoreManager.Instance.Score;
         int maxCombo = ComboManager.Instance.MaxCombo;
+        characterExp = finalScore / 1000;
 
         scoreText.text = "Final Score: " + finalScore.ToString();
         comboText.text = "Max Combo: " + maxCombo.ToString();
@@ -21,10 +27,14 @@ public class ClearSceneController : MonoBehaviour
     void SendGameDataToBackEnd()
     {
         Param param = new Param();
-        param.Add("songId", SongSelectionManager.Instance.SelectedSongID);
-        param.Add("maxCombo", ComboManager.Instance.MaxCombo);
-        param.Add("score", ScoreManager.Instance.Score);
-    
+        param.Add("SongID", SongSelectionManager.Instance.SelectedSongID);
+        param.Add("Combo", ComboManager.Instance.MaxCombo);
+        param.Add("Score", ScoreManager.Instance.Score);
+        param.Add("Clear", clear);
+        param.Add("CharacterLevel", characterLevel);
+        param.Add("CharacterExp", characterExp);
+        param.Add("CharacterID", characterID);
+        param.Add("Count", count);
         // GameInfo 대신 GameData를 사용하여 데이터 삽입
         BackendReturnObject bro = Backend.GameData.Insert("game_results", param);
         if (bro.IsSuccess())

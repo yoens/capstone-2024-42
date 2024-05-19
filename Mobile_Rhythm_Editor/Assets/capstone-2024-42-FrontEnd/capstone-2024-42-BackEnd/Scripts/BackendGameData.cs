@@ -49,11 +49,11 @@ public class BackendGameData
             if (callback.IsSuccess())
             {
                 UserDataRowInDate = callback.GetInDate();
-                Debug.Log("³» User InfoÀÇ indate : " + UserDataRowInDate);
+                Debug.Log("ë‚´ User Infoì˜ indate : " + UserDataRowInDate);
             }
             else
             {
-                Debug.LogError("À¯Àú °ÔÀÓ Á¤º¸ »ğÀÔ ½ÇÆĞ : " + callback.ToString());
+                Debug.LogError("ìœ ì € ê²Œì„ ì •ë³´ ì‚½ì… ì‹¤íŒ¨ : " + callback.ToString());
             }
         });
     }
@@ -73,7 +73,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+                        Debug.Log("ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
                         return;
                     }
                     else
@@ -95,7 +95,7 @@ public class BackendGameData
     {
         if(userGameData == null)
         {
-            Debug.Log("Insert or Load ¸ÕÀú ÇÊ¿äÇÔ");
+            Debug.Log("Insert or Load ë¨¼ì € í•„ìš”í•¨");
             return;
         }
 
@@ -103,17 +103,17 @@ public class BackendGameData
 
         if(string.IsNullOrEmpty(UserDataRowInDate))
         {
-            Debug.LogError("À¯ÀúÀÇ inDate Á¤º¸°¡ X");
+            Debug.LogError("ìœ ì €ì˜ inDate ì •ë³´ê°€ X");
         }
         else
         {
-            Debug.Log($"{UserDataRowInDate}ÀÇ °ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¿äÃ»");
+            Debug.Log($"{UserDataRowInDate}ì˜ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ìš”ì²­");
 
             Backend.GameData.UpdateV2("User", UserDataRowInDate, Backend.UserInDate, param, callback =>
             {
                 if(callback.IsSuccess())
                 {
-                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¼º°ø : {callback}");
+                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì„±ê³µ : {callback}");
 
                     action?.Invoke();
 
@@ -121,7 +121,7 @@ public class BackendGameData
                 }
                 else
                 {
-                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ½ÇÆĞ : {callback}");
+                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì‹¤íŒ¨ : {callback}");
                 }
             });
         }
@@ -138,11 +138,11 @@ public class BackendGameData
             if (callback.IsSuccess())
             {
                 SongDataRowInDate = callback.GetInDate();
-                Debug.Log("³» Player Song InfoÀÇ indate : " + SongDataRowInDate);
+                Debug.Log("ë‚´ Player Song Infoì˜ indate : " + SongDataRowInDate);
             }
             else
             {
-                Debug.LogError("°î °ÔÀÓ Á¤º¸ »ğÀÔ ½ÇÆĞ : " + callback.ToString());
+                Debug.LogError("ê³¡ ê²Œì„ ì •ë³´ ì‚½ì… ì‹¤íŒ¨ : " + callback.ToString());
             }
         });
     }
@@ -164,7 +164,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+                        Debug.Log("ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
                         return;
                     }
                     else
@@ -186,7 +186,7 @@ public class BackendGameData
     {
         if (playerSongGameData == null)
         {
-            Debug.Log("Insert or Load ¸ÕÀú ÇÊ¿äÇÔ");
+            Debug.Log("Insert or Load ë¨¼ì € í•„ìš”í•¨");
             return;
         }
 
@@ -194,17 +194,17 @@ public class BackendGameData
 
         if (string.IsNullOrEmpty(SongDataRowInDate))
         {
-            Debug.LogError("À¯Àú °îÀÇ inDate Á¤º¸°¡ X");
+            Debug.LogError("ìœ ì € ê³¡ì˜ inDate ì •ë³´ê°€ X");
         }
         else
         {
-            Debug.Log($"{SongDataRowInDate}ÀÇ °ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¿äÃ»");
+            Debug.Log($"{SongDataRowInDate}ì˜ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ìš”ì²­");
 
             Backend.GameData.UpdateV2("PlayerSong", SongDataRowInDate, Backend.UserInDate, param, callback =>
             {
                 if (callback.IsSuccess())
                 {
-                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¼º°ø : {callback}");
+                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì„±ê³µ : {callback}");
 
                     action?.Invoke();
 
@@ -212,7 +212,7 @@ public class BackendGameData
                 }
                 else
                 {
-                    Debug.Log($"°î °ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ½ÇÆĞ : {callback}");
+                    Debug.Log($"ê³¡ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì‹¤íŒ¨ : {callback}");
                 }
             });
         }
@@ -229,11 +229,11 @@ public class BackendGameData
             if (callback.IsSuccess())
             {
                 CharacterDataRowInDate = callback.GetInDate();
-                Debug.Log("³» Player Character InfoÀÇ indate : " + CharacterDataRowInDate);
+                Debug.Log("ë‚´ Player Character Infoì˜ indate : " + CharacterDataRowInDate);
             }
             else
             {
-                Debug.LogError("Ä³¸¯ÅÍ °ÔÀÓ Á¤º¸ »ğÀÔ ½ÇÆĞ : " + callback.ToString());
+                Debug.LogError("ìºë¦­í„° ê²Œì„ ì •ë³´ ì‚½ì… ì‹¤íŒ¨ : " + callback.ToString());
             }
         });
     }
@@ -255,7 +255,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+                        Debug.Log("ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
                         return;
                     }
                     else
@@ -277,7 +277,7 @@ public class BackendGameData
     {
         if (playerCharacterGameData == null)
         {
-            Debug.Log("Insert or Load ¸ÕÀú ÇÊ¿äÇÔ");
+            Debug.Log("Insert or Load ë¨¼ì € í•„ìš”í•¨");
             return;
         }
 
@@ -285,17 +285,17 @@ public class BackendGameData
 
         if (string.IsNullOrEmpty(CharacterDataRowInDate))
         {
-            Debug.LogError("À¯Àú °îÀÇ inDate Á¤º¸°¡ X");
+            Debug.LogError("ìœ ì € ê³¡ì˜ inDate ì •ë³´ê°€ X");
         }
         else
         {
-            Debug.Log($"{CharacterDataRowInDate}ÀÇ °ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¿äÃ»");
+            Debug.Log($"{CharacterDataRowInDate}ì˜ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ìš”ì²­");
 
             Backend.GameData.UpdateV2("PlayerCharacter", CharacterDataRowInDate, Backend.UserInDate, param, callback =>
             {
                 if (callback.IsSuccess())
                 {
-                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¼º°ø : {callback}");
+                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì„±ê³µ : {callback}");
 
                     action?.Invoke();
 
@@ -303,7 +303,7 @@ public class BackendGameData
                 }
                 else
                 {
-                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ½ÇÆĞ : {callback}");
+                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì‹¤íŒ¨ : {callback}");
                 }
             });
         }
