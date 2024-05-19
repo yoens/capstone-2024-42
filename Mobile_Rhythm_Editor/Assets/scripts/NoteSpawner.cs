@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -20,11 +19,11 @@ public class NoteSpawner : MonoBehaviour
 {
     public AudioSource audioSource;
     public ObjectPoolManager poolManager;
-    public string jsonFilePath = "Assets/Ripple - Everyday  DnB  NCS - Copyright Free Music.json";
     private List<NoteData> notesToSpawn;
     public Transform[] spawnPoints;
     public Transform centerPoint;
-    private Dictionary<string, int> typeToIndexMap = new Dictionary<string, int> {
+    private Dictionary<string, int> typeToIndexMap = new Dictionary<string, int>
+    {
         { "Note_R", 2 }, 
         { "Note_G", 1 }, 
         { "Note_Y", 0 }
@@ -33,12 +32,11 @@ public class NoteSpawner : MonoBehaviour
     void Start()
     {
         LoadNotesData();
-        audioSource.Play();
     }
 
     void Update()
     {
-        if (notesToSpawn.Count > 0 && audioSource.isPlaying)
+        if (notesToSpawn != null && notesToSpawn.Count > 0 && audioSource.isPlaying)
         {
             while (notesToSpawn.Count > 0 && audioSource.time >= notesToSpawn[0].time)
             {
@@ -50,15 +48,30 @@ public class NoteSpawner : MonoBehaviour
 
     void LoadNotesData()
     {
-        string jsonText = File.ReadAllText(jsonFilePath);
-        NoteDataCollection loadedData = JsonUtility.FromJson<NoteDataCollection>(jsonText);
-        if (loadedData != null && loadedData.Notes != null)
+        if (SongSelectionManager.Instance != null)
         {
-            notesToSpawn = new List<NoteData>(loadedData.Notes.OrderBy(note => note.time));
+            string path = "JSONs/" + SongSelectionManager.Instance.SelectedSongID;
+            TextAsset jsonData = Resources.Load<TextAsset>(path);
+            if (jsonData != null)
+            {
+                NoteDataCollection loadedData = JsonUtility.FromJson<NoteDataCollection>(jsonData.text);
+                if (loadedData != null && loadedData.Notes != null)
+                {
+                    notesToSpawn = new List<NoteData>(loadedData.Notes.OrderBy(note => note.time));
+                }
+                else
+                {
+                    Debug.LogError("Loaded notes data is invalid or null.");
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to load JSON data: " + path);
+            }
         }
         else
         {
-            Debug.LogError("Failed to load notes data or notes are null.");
+            Debug.LogError("SongSelectionManager instance is not initialized.");
         }
     }
 

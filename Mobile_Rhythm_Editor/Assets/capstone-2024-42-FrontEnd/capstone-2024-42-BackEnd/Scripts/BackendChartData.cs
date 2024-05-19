@@ -62,7 +62,7 @@ public class BackendChartData : MonoBehaviour
 
                     if (jsonData.Count <= 0)
                     {
-                        Debug.LogWarning("µ¥ÀÌÅÍ ¹ÌÁ¸Àç");
+                        Debug.LogWarning("ë°ì´í„° ë¯¸ì¡´ìž¬");
                     }
                     else
                     {
@@ -85,7 +85,7 @@ public class BackendChartData : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"{Constants.LEVEL_CHART}Â÷Æ® ºÒ·¯¿À±â ¿¡·¯ : {callback}");
+                Debug.LogError($"{Constants.LEVEL_CHART}ì°¨íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì—ëŸ¬ : {callback}");
             }
         });
     }
@@ -101,7 +101,7 @@ public class BackendChartData : MonoBehaviour
 
                     if (jsonData.Count <= 0)
                     {
-                        Debug.LogWarning("µ¥ÀÌÅÍ ¹ÌÁ¸Àç");
+                        Debug.LogWarning("ë°ì´í„° ë¯¸ì¡´ìž¬");
                     }
                     else
                     {
@@ -127,7 +127,7 @@ public class BackendChartData : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"{Constants.SONG_CHART}Â÷Æ® ºÒ·¯¿À±â ¿¡·¯ : {callback}");
+                Debug.LogError($"{Constants.SONG_CHART}ì°¨íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì—ëŸ¬ : {callback}");
             }
         });
     }

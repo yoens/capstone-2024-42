@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 0}
-  speed: 60
+  speed: 100
 --- !u!61 &2387861674714700362
 BoxCollider2D:
   m_ObjectHideFlags: 0

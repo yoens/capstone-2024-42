@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DelayMusic : MonoBehaviour
@@ -14,13 +13,22 @@ public class DelayMusic : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
 
-        if (audioSource != null)
+        if (audioSource != null && SongSelectionManager.Instance != null)
         {
-            audioSource.PlayDelayed(delay);
+            AudioClip clip = Resources.Load<AudioClip>("Songs/" + SongSelectionManager.Instance.SelectedSongID);
+            if (clip != null)
+            {
+                audioSource.clip = clip;
+                audioSource.PlayDelayed(delay);
+            }
+            else
+            {
+                Debug.LogError("Audio clip not found for the selected song.");
+            }
         }
         else
         {
-            Debug.LogError("AudioSource 컴포넌트가 없습니다.");
+            Debug.LogError("AudioSource component not found or song not selected properly.");
         }
     }
 }

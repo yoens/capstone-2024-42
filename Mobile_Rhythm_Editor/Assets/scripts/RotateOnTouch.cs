@@ -8,7 +8,14 @@ public class RotateOnTouch : MonoBehaviour
     public float sensitivity = 0.5f;  // 터치 움직임에 대한 민감도를 조절합니다.
     public CircleCollider2D touchCollider;  // 원판의 Collider2D
 
-   void Update()
+    private float previousAngle;
+
+    void Start()
+    {
+        previousAngle = transform.eulerAngles.z;
+    }
+
+    void Update()
     {
         if (Input.touchCount > 0)
         {
@@ -22,12 +29,16 @@ public class RotateOnTouch : MonoBehaviour
                 float rotation = touchDeltaPosition.x * rotationSpeed * sensitivity * Time.deltaTime;
                 transform.RotateAround(centerPoint.position, Vector3.forward, -rotation);
 
-                // 현재 각도를 계산하고 RandomMarkers 스크립트에 전달
+                // 현재 각도를 계산하고 이전 각도와 비교하여 회전 방향 판단
                 float currentAngle = transform.eulerAngles.z;
+                bool isRotatingRight = (Mathf.DeltaAngle(previousAngle, currentAngle) < 0);
+
                 if (randomMarkers != null)
                 {
-                    randomMarkers.UpdateRotation(currentAngle);
+                    randomMarkers.UpdateRotation(currentAngle, isRotatingRight);
                 }
+
+                previousAngle = currentAngle;  // 이전 각도 업데이트
             }
         }
     }
