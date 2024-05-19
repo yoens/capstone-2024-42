@@ -6,16 +6,15 @@ using TMPro;
 
 public class SongList : MonoBehaviour
 {
-    public int Song_Count = 10;
+    private int Song_Count = 12;
     public GameObject[] song_object = new GameObject[10];
 
     public TMP_Text[] list_name;
     public TMP_Text[] list_difficulty;
-    public Image list_image;
 
     void Start() // 곡 선택 창에서 자신이 보유한 곡들만 보여주는 기능
     {
-        int a;
+        /*int a;
         for (int i = 0; i < Song.user_song.Length ; i++)
         {
             a = Song.user_song[i];
@@ -24,6 +23,12 @@ public class SongList : MonoBehaviour
             list_difficulty[a].text = Song.difficulty[a];
             song_object[a].gameObject.SetActive(true);
 
+        }*/
+
+        for (int i = 0; i < Song_Count ; i++)
+        {
+            list_name[i].text = Song.s_name[i];
+            list_difficulty[i].text = Song.difficulty[i];
         }
     }
 }
