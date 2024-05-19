@@ -13,7 +13,7 @@ public class SongList : MonoBehaviour
     public TMP_Text[] list_difficulty;
     public Image list_image;
 
-    void Start() // ê³¡ ì„ íƒ ì°½ì—ì„œ ìì‹ ì´ ë³´ìœ í•œ ê³¡ë“¤ë§Œ ë³´ì—¬ì£¼ëŠ” ê¸°ëŠ¥
+    void Start() // °î ¼±ÅÃ Ã¢¿¡¼­ ÀÚ½ÅÀÌ º¸À¯ÇÑ °îµé¸¸ º¸¿©ÁÖ´Â ±â´É
     {
         int a;
         for (int i = 0; i < Song.user_song.Length ; i++)
