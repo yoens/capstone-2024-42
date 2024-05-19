@@ -15,7 +15,7 @@ public class DelayMusic : MonoBehaviour
 
         if (audioSource != null && SongSelectionManager.Instance != null)
         {
-            AudioClip clip = Resources.Load<AudioClip>("Songs/" + SongSelectionManager.Instance.SelectedSongID);
+            AudioClip clip = Resources.Load<AudioClip>(SongSelectionManager.Instance.SelectedSongID);
             if (clip != null)
             {
                 audioSource.clip = clip;
