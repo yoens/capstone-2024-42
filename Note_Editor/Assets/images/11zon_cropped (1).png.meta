@@ -156,7 +156,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      11zon_cropped (1)_0: -7492799220112802222
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

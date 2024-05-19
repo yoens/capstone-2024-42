@@ -156,7 +156,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sfb_mac_0: 4550986910354303528
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

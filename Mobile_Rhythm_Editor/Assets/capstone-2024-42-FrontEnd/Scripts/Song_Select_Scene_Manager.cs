@@ -22,7 +22,7 @@ public class Song_Select_Scene_Manager : MonoBehaviour
 
     public TMP_Text score_text;
 
-    public int play_song_id = 0;
+    public static int play_song_id = 0;
 
     int currentItem = 0;
     void Start()
