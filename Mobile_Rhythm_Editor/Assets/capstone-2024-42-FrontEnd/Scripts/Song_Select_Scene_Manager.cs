@@ -30,7 +30,7 @@ public class Song_Select_Scene_Manager : MonoBehaviour
         //isSnapped = false;
     }
 
-    void Update()
+    void Update() // 곡 파악 및, 스크롤 뷰 이동 속도가 줄면 자동으로 가까운 대상으로 고정
     {
         currentItem = Mathf.RoundToInt(contentPanel.localPosition.y / (sampleListItem.rect.height + VLG.spacing));
 
@@ -48,7 +48,7 @@ public class Song_Select_Scene_Manager : MonoBehaviour
                 isSnapped = true;
             }*/
             contentPanel.localPosition = new Vector3(contentPanel.localPosition.x, (currentItem * (sampleListItem.rect.height + VLG.spacing)), contentPanel.localPosition.z);
-            main_image.sprite = album[Song.user_song[currentItem]];
+            main_image.sprite = album[currentItem];
             score_text.text = Song.score[currentItem].ToString();
         }
 
@@ -59,10 +59,9 @@ public class Song_Select_Scene_Manager : MonoBehaviour
         }*/
     }
 
-    public void touch_select()
+    public void touch_select() // 곡 선택 버튼 클릭 시 플레이 할 곡 id 변경
     {
-        Debug.Log(currentItem);
-        play_song_id = Song.user_song[currentItem];
+        play_song_id = currentItem;
     }
 }
 //0 - (currentItem * (sampleListItem.rect.height + VLG.spacing))
