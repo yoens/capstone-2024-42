@@ -50,7 +50,8 @@ public class NoteSpawner : MonoBehaviour
     {
         if (SongSelectionManager.Instance != null)
         {
-            string path = "JSONs/" + SongSelectionManager.Instance.SelectedSongID;
+            string path = SongSelectionManager.Instance.SelectedSongJsonPath;
+            Debug.Log("Attempting to load JSON from: " + path);  // 로그 추가
             TextAsset jsonData = Resources.Load<TextAsset>(path);
             if (jsonData != null)
             {

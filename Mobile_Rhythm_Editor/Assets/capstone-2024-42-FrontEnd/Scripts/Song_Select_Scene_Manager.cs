@@ -30,7 +30,7 @@ public class Song_Select_Scene_Manager : MonoBehaviour
         //isSnapped = false;
     }
 
-    void Update() // °î ÆÄ¾Ç ¹×, ½ºÅ©·Ñ ºä ÀÌµ¿ ¼Óµµ°¡ ÁÙ¸é ÀÚµ¿À¸·Î °¡±î¿î ´ë»óÀ¸·Î °íÁ¤
+    void Update() // ï¿½ï¿½ ï¿½Ä¾ï¿½ ï¿½ï¿½, ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½Óµï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         currentItem = Mathf.RoundToInt(contentPanel.localPosition.y / (sampleListItem.rect.height + VLG.spacing));
 
@@ -51,6 +51,7 @@ public class Song_Select_Scene_Manager : MonoBehaviour
             main_image.sprite = album[currentItem];
             score_text.text = Song.score[currentItem].ToString();
         }
+        touch_select();
 
         /*if(scrollRect.velocity.magnitude > 200)
         {
@@ -59,9 +60,19 @@ public class Song_Select_Scene_Manager : MonoBehaviour
         }*/
     }
 
-    public void touch_select() // °î ¼±ÅÃ ¹öÆ° Å¬¸¯ ½Ã ÇÃ·¹ÀÌ ÇÒ °î id º¯°æ
+    public void touch_select() // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ id ï¿½ï¿½ï¿½ï¿½
     {
-        play_song_id = currentItem;
+        play_song_id = currentItem +1;
+        string selectedSongID = play_song_id.ToString();
+        Debug.LogError("ê³¡" + selectedSongID);
+        if (SongSelectionManager.Instance != null)
+        {
+            SongSelectionManager.Instance.SelectSong(selectedSongID);
+        }
+        else
+        {
+            Debug.LogError("ê³¡ ì„ íƒ ì•ˆë¨");
+        }
     }
 }
 //0 - (currentItem * (sampleListItem.rect.height + VLG.spacing))
