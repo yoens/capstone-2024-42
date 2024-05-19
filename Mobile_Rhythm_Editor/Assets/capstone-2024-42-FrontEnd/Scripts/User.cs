@@ -9,19 +9,19 @@ public class User : MonoBehaviour
     public TMP_Text Text_user_name;
     public TMP_Text Text_user_level;
     public TMP_Text Text_gold;
-    //BackendGameData.Instance.User-.
-    public static int uid = 1000;               // À¯Àú UID
-    public static string user_name = "min";     // À¯Àú°¡ ¼³Á¤ÇÑ ÀÌ¸§
-    public static int character = 0;            // À¯Àú°¡ ¼±ÅÃÇÑ ÇöÀç Ä³¸¯ÅÍ id
-    public static int user_level = 5;           // À¯ÀúÀÇ ·¹º§
-    public static int exp = 50;                        // À¯Àú °æÇèÄ¡
-    public static int gold = 10000;                    // À¯Àú°¡ º¸À¯ÇÑ ÀçÈ­
-    public static int ranking = 10;             // À¯Àú ·©Å·
-    public static int score = 999;              // À¯Àú°¡ Å¬¸®¾îÇÑ °î Á¡¼öÀÇ ÇÕ
 
-    public static int[] song = { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 }; // À¯Àú°¡ º¸À¯ÇÑ °î (1ÀÌ º¸À¯)
-    public int[] clear_song = { 1, 0, 1, 0, 1, 0, 0, 0, 0, 0 }; // ÇØ´ç °îÀÇ Å¬¸®¾î À¯¹« (1ÀÌ Å¬¸®¾î)
-    public int[] score_song = { 999, 0, 1999, 0, 2999, 0, 0, 0, 0, 0 }; // ÇØ´ç °î¿¡¼­ ¾òÀº ÃÖ°í Á¡¼ö
+    public static int uid = 1000;               // ìœ ì € UID
+    public static string user_name = "min";     // ìœ ì €ê°€ ì„¤ì •í•œ ì´ë¦„
+    public static int character = 0;            // ìœ ì €ê°€ ì„ íƒí•œ í˜„ì¬ ìºë¦­í„° id
+    public static int user_level = 5;           // ìœ ì €ì˜ ë ˆë²¨
+    public static int exp = 50;                        // ìœ ì € ê²½í—˜ì¹˜
+    public static int gold = 10000;                    // ìœ ì €ê°€ ë³´ìœ í•œ ì¬í™”
+    public static int ranking = 10;             // ìœ ì € ë­í‚¹
+    public static int score = 999;              // ìœ ì €ê°€ í´ë¦¬ì–´í•œ ê³¡ ì ìˆ˜ì˜ í•©
+
+    public static int[] song = { 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 }; // ìœ ì €ê°€ ë³´ìœ í•œ ê³¡ (1ì´ ë³´ìœ )
+    public int[] clear_song = { 1, 0, 1, 0, 1, 0, 0, 0, 0, 0 }; // í•´ë‹¹ ê³¡ì˜ í´ë¦¬ì–´ ìœ ë¬´ (1ì´ í´ë¦¬ì–´)
+    public int[] score_song = { 999, 0, 1999, 0, 2999, 0, 0, 0, 0, 0 }; // í•´ë‹¹ ê³¡ì—ì„œ ì–»ì€ ìµœê³  ì ìˆ˜
 
     // Start is called before the first frame update
     void Start()
