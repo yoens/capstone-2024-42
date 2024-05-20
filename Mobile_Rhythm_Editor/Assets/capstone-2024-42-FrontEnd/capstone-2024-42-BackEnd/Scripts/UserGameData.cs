@@ -30,7 +30,7 @@ public class UserGameData : MonoBehaviour
     {
         Param param = new Param();
         param.Add("Level", level);
-        param.Add("money", money);
+        param.Add("Money", money);
         param.Add("SelectCharacter", selectCharacter_num);
         param.Add("UserExp", userExp);
         param.Add("UserScore", userScore);
@@ -42,7 +42,7 @@ public class UserGameData : MonoBehaviour
     public void Json_write(LitJson.JsonData gameDataJson)
     {
         ownerIndate = gameDataJson[0]["InDate"].ToString();
-        level = int.Parse(gameDataJson[0]["level"].ToString());
+        level = int.Parse(gameDataJson[0]["Level"].ToString());
         money = int.Parse(gameDataJson[0]["Money"].ToString());
         userExp = int.Parse(gameDataJson[0]["UserExp"].ToString());
         userScore = int.Parse(gameDataJson[0]["UserScore"].ToString());

@@ -49,11 +49,16 @@ public class BackendGameData
             if (callback.IsSuccess())
             {
                 UserDataRowInDate = callback.GetInDate();
-                Debug.Log("ë‚´ User Infoì˜ indate : " + UserDataRowInDate);
+                Debug.Log("³» User InfoÀÇ indate : " + UserDataRowInDate);
             }
             else
             {
-                Debug.LogError("ìœ ì € ê²Œì„ ì •ë³´ ì‚½ì… ì‹¤íŒ¨ : " + callback.ToString());
+                Debug.LogError("À¯Àú °ÔÀÓ Á¤º¸ »ğÀÔ ½ÇÆĞ : " + callback.ToString());
+                if (callback.IsClientRequestFailError())
+                {
+                    Debug.Log("³×Æ®¿öÅ©°¡ ÀÏ½ÃÀûÀ¸·Î ²÷¾îÁ³À» °æ¿ì");
+//                    UserDataInsert();
+                }
             }
         });
     }
@@ -73,7 +78,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
+                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
                         return;
                     }
                     else
@@ -95,7 +100,7 @@ public class BackendGameData
     {
         if(userGameData == null)
         {
-            Debug.Log("Insert or Load ë¨¼ì € í•„ìš”í•¨");
+            Debug.Log("Insert or Load ¸ÕÀú ÇÊ¿äÇÔ");
             return;
         }
 
@@ -103,17 +108,17 @@ public class BackendGameData
 
         if(string.IsNullOrEmpty(UserDataRowInDate))
         {
-            Debug.LogError("ìœ ì €ì˜ inDate ì •ë³´ê°€ X");
+            Debug.LogError("À¯ÀúÀÇ inDate Á¤º¸°¡ X");
         }
         else
         {
-            Debug.Log($"{UserDataRowInDate}ì˜ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ìš”ì²­");
+            Debug.Log($"{UserDataRowInDate}ÀÇ °ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¿äÃ»");
 
             Backend.GameData.UpdateV2("User", UserDataRowInDate, Backend.UserInDate, param, callback =>
             {
                 if(callback.IsSuccess())
                 {
-                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì„±ê³µ : {callback}");
+                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¼º°ø : {callback}");
 
                     action?.Invoke();
 
@@ -121,7 +126,12 @@ public class BackendGameData
                 }
                 else
                 {
-                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì‹¤íŒ¨ : {callback}");
+                    Debug.Log($"°ÔÀÓ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ½ÇÆĞ : {callback}");
+                    if (callback.IsClientRequestFailError())
+                    {
+                        Debug.Log("³×Æ®¿öÅ©°¡ ÀÏ½ÃÀûÀ¸·Î ²÷¾îÁ³À» °æ¿ì");
+                        UserDataUpdate(action);
+                    }
                 }
             });
         }
@@ -138,11 +148,16 @@ public class BackendGameData
             if (callback.IsSuccess())
             {
                 SongDataRowInDate = callback.GetInDate();
-                Debug.Log("ë‚´ Player Song Infoì˜ indate : " + SongDataRowInDate);
+                Debug.Log("³» Player Song InfoÀÇ indate : " + SongDataRowInDate);
             }
             else
             {
-                Debug.LogError("ê³¡ ê²Œì„ ì •ë³´ ì‚½ì… ì‹¤íŒ¨ : " + callback.ToString());
+                Debug.LogError("°î °ÔÀÓ Á¤º¸ »ğÀÔ ½ÇÆĞ : " + callback.ToString());
+                if (callback.IsClientRequestFailError())
+                {
+                    Debug.Log("³×Æ®¿öÅ©°¡ ÀÏ½ÃÀûÀ¸·Î ²÷¾îÁ³À» °æ¿ì");
+                    //                    UserDataInsert();
+                }
             }
         });
     }
@@ -164,7 +179,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
+                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
                         return;
                     }
                     else
@@ -186,7 +201,7 @@ public class BackendGameData
     {
         if (playerSongGameData == null)
         {
-            Debug.Log("Insert or Load ë¨¼ì € í•„ìš”í•¨");
+            Debug.Log("Insert or Load ¸ÕÀú ÇÊ¿äÇÔ");
             return;
         }
 
@@ -194,25 +209,28 @@ public class BackendGameData
 
         if (string.IsNullOrEmpty(SongDataRowInDate))
         {
-            Debug.LogError("ìœ ì € ê³¡ì˜ inDate ì •ë³´ê°€ X");
+            Debug.LogError("º¸À¯ °îÀÇ inDate Á¤º¸°¡ X");
         }
         else
         {
-            Debug.Log($"{SongDataRowInDate}ì˜ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ìš”ì²­");
+            Debug.Log($"{SongDataRowInDate}ÀÇ º¸À¯ °î Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¿äÃ»");
 
             Backend.GameData.UpdateV2("PlayerSong", SongDataRowInDate, Backend.UserInDate, param, callback =>
             {
                 if (callback.IsSuccess())
                 {
-                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì„±ê³µ : {callback}");
+                    Debug.Log($"º¸À¯ °î Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¼º°ø : {callback}");
 
                     action?.Invoke();
-
-                    //                    BackendGameData.Instance.UserDataUpdate();
                 }
                 else
                 {
-                    Debug.Log($"ê³¡ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì‹¤íŒ¨ : {callback}");
+                    Debug.Log($"º¸À¯ °î Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ½ÇÆĞ : {callback}");
+                    if (callback.IsClientRequestFailError())
+                    {
+                        Debug.Log("³×Æ®¿öÅ©°¡ ÀÏ½ÃÀûÀ¸·Î ²÷¾îÁ³À» °æ¿ì");
+                        PlayerSongDataUpdate(songID, action);
+                    }
                 }
             });
         }
@@ -229,11 +247,16 @@ public class BackendGameData
             if (callback.IsSuccess())
             {
                 CharacterDataRowInDate = callback.GetInDate();
-                Debug.Log("ë‚´ Player Character Infoì˜ indate : " + CharacterDataRowInDate);
+                Debug.Log("³» Player Character InfoÀÇ indate : " + CharacterDataRowInDate);
             }
             else
             {
-                Debug.LogError("ìºë¦­í„° ê²Œì„ ì •ë³´ ì‚½ì… ì‹¤íŒ¨ : " + callback.ToString());
+                Debug.LogError("º¸À¯ Ä³¸¯ÅÍ °ÔÀÓ Á¤º¸ »ğÀÔ ½ÇÆĞ : " + callback.ToString());
+                if (callback.IsClientRequestFailError())
+                {
+                    Debug.Log("³×Æ®¿öÅ©°¡ ÀÏ½ÃÀûÀ¸·Î ²÷¾îÁ³À» °æ¿ì");
+                    //                    UserDataInsert();
+                }
             }
         });
     }
@@ -255,7 +278,7 @@ public class BackendGameData
 
                     if (gameDataJson.Count <= 0)
                     {
-                        Debug.Log("ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
+                        Debug.Log("µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
                         return;
                     }
                     else
@@ -277,7 +300,7 @@ public class BackendGameData
     {
         if (playerCharacterGameData == null)
         {
-            Debug.Log("Insert or Load ë¨¼ì € í•„ìš”í•¨");
+            Debug.Log("Insert or Load ¸ÕÀú ÇÊ¿äÇÔ");
             return;
         }
 
@@ -285,25 +308,28 @@ public class BackendGameData
 
         if (string.IsNullOrEmpty(CharacterDataRowInDate))
         {
-            Debug.LogError("ìœ ì € ê³¡ì˜ inDate ì •ë³´ê°€ X");
+            Debug.LogError("º¸À¯ Ä³¸¯ÅÍÀÇ inDate Á¤º¸°¡ X");
         }
         else
         {
-            Debug.Log($"{CharacterDataRowInDate}ì˜ ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ìš”ì²­");
+            Debug.Log($"{CharacterDataRowInDate}ÀÇ º¸À¯ Ä³¸¯ÅÍ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¿äÃ»");
 
             Backend.GameData.UpdateV2("PlayerCharacter", CharacterDataRowInDate, Backend.UserInDate, param, callback =>
             {
                 if (callback.IsSuccess())
                 {
-                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì„±ê³µ : {callback}");
+                    Debug.Log($"º¸À¯ Ä³¸¯ÅÍ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ¼º°ø : {callback}");
 
                     action?.Invoke();
-
-                    //                    BackendGameData.Instance.UserDataUpdate();
                 }
                 else
                 {
-                    Debug.Log($"ê²Œì„ ì •ë³´ ë°ì´í„° ìˆ˜ì • ì‹¤íŒ¨ : {callback}");
+                    Debug.Log($"º¸À¯ Ä³¸¯ÅÍ Á¤º¸ µ¥ÀÌÅÍ ¼öÁ¤ ½ÇÆĞ : {callback}");
+                    if (callback.IsClientRequestFailError())
+                    {
+                        Debug.Log("³×Æ®¿öÅ©°¡ ÀÏ½ÃÀûÀ¸·Î ²÷¾îÁ³À» °æ¿ì");
+                        PlayerCharacterDataUpdate(characterID, action);
+                    }
                 }
             });
         }
