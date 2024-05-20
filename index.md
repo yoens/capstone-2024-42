@@ -54,6 +54,8 @@
 
 [기획서](https://drive.google.com/file/d/1pPobxG6_mW5FWjyTf-PtPU_B351k3hOa/view?usp=drive_link)
 
-[포스터](https://drive.google.com/file/d/14Lt6L0L3sKpljC41l9mdQLtfMF7kDZ7a/view?usp=sharing)
+[포스터.pdf](https://drive.google.com/file/d/1VfDWzHIYPdeUWtz2Z0awQhlk0to9Pal7/view?usp=sharing)
+
+[포스터.png](https://drive.google.com/file/d/1O_0aXgl9sldYax8Ooj751B1JbSQ6KYve/view?usp=sharing)
 
 ![footer](https://capsule-render.vercel.app/api?section=footer)
