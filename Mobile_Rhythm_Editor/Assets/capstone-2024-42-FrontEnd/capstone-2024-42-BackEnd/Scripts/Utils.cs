@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public enum SceneNames { LogoScene = 0, LoginScene, LoadingScene, LobbyScene }
+public enum SceneNames { LogoScene = 0, LoginScene, LoadingScene, LobbyScene, Main_Scene}
 
 public static class Utils
 {

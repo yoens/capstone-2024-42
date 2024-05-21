@@ -64,7 +64,6 @@ public class Song_Select_Scene_Manager : MonoBehaviour
     {
         play_song_id = currentItem +1;
         string selectedSongID = play_song_id.ToString();
-        Debug.LogError("곡" + selectedSongID);
         if (SongSelectionManager.Instance != null)
         {
             SongSelectionManager.Instance.SelectSong(selectedSongID);

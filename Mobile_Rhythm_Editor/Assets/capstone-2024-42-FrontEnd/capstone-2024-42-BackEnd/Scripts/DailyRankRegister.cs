@@ -10,7 +10,7 @@ public class RankRegister : MonoBehaviour
     {
         //        UpdateMyRankData(newScore);
 
-        //∞Ó¿∏∑Œ æ˜µ•¿Ã∆Æ
+        //Í≥°ÏúºÎ°ú ÏóÖÎç∞Ïù¥Ìä∏
 
         UpdateMyBestRankData(newScore);
     }
@@ -26,7 +26,7 @@ public class RankRegister : MonoBehaviour
 
                     if(rankDataJson.Count <= 0)
                     {
-                        Debug.LogWarning("µ•¿Ã≈Õ πÃ¡∏¿Á");
+                        Debug.LogWarning("Îç∞Ïù¥ÌÑ∞ ÎØ∏Ï°¥Ïû¨");
                     }
                     else
                     {
@@ -36,7 +36,7 @@ public class RankRegister : MonoBehaviour
                         {
                             UpdateMyRankData(newScore);
 
-                            Debug.Log($"√÷∞Ì ¡°ºˆ ∞ªΩ≈ {bestScore} -> {newScore}");
+                            Debug.Log($"ÏµúÍ≥† Ï†êÏàò Í∞±Ïã† {bestScore} -> {newScore}");
                         }
                     }
                 }
@@ -51,7 +51,7 @@ public class RankRegister : MonoBehaviour
                 {
                     UpdateMyRankData(newScore);
 
-                    Debug.Log($"ªı∑ŒøÓ ∑©≈∑ µ•¿Ã≈Õ ª˝º∫ π◊ µÓ∑œ : {callback}");
+                    Debug.Log($"ÏÉàÎ°úÏö¥ Îû≠ÌÇπ Îç∞Ïù¥ÌÑ∞ ÏÉùÏÑ± Î∞è Îì±Î°ù : {callback}");
                 }
             }
         });
@@ -65,11 +65,11 @@ public class RankRegister : MonoBehaviour
             {
                 if (!callback.IsSuccess())
                 {
-                    Debug.LogError($"µ•¿Ã≈Õ ¡∂»∏ ¡ﬂ πÆ¡¶ πﬂª˝ : {callback}");
+                    Debug.LogError($"Îç∞Ïù¥ÌÑ∞ Ï°∞Ìöå Ï§ë Î¨∏Ï†ú Î∞úÏÉù : {callback}");
                     return;
                 }
 
-                Debug.Log($"µ•¿Ã≈Õ ¡∂»∏ º∫∞¯ : {callback}");
+                Debug.Log($"Îç∞Ïù¥ÌÑ∞ Ï°∞Ìöå ÏÑ±Í≥µ : {callback}");
 
                 if (callback.FlattenRows().Count > 0)
                 {
@@ -77,7 +77,7 @@ public class RankRegister : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("µ•¿Ã≈Õ πÃ¡∏¿Á");
+                    Debug.LogError("Îç∞Ïù¥ÌÑ∞ ÎØ∏Ï°¥Ïû¨");
                     return;
                 }
             });
@@ -91,11 +91,11 @@ public class RankRegister : MonoBehaviour
             {
                 if (callback.IsSuccess())
                 {
-                    Debug.Log($"∑©≈∑ µÓ∑œ º∫∞¯ : {callback}");
+                    Debug.Log($"Îû≠ÌÇπ Îì±Î°ù ÏÑ±Í≥µ : {callback}");
                 }
                 else
                 {
-                    Debug.LogError($"∑©≈∑ µÓ∑œ Ω«∆– : {callback}");
+                    Debug.LogError($"Îû≠ÌÇπ Îì±Î°ù Ïã§Ìå® : {callback}");
                 }
             });
         }
