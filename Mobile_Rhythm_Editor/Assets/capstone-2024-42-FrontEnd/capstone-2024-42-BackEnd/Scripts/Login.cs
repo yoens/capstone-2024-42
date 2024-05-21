@@ -43,7 +43,7 @@ public class Login : LoginBase
 
                 BackendChartData.LoadAllChart();
 
-                Utils.LoadScene(SceneNames.LobbyScene);
+                Utils.LoadScene(SceneNames.Main_Scene);
             }
             else
             {

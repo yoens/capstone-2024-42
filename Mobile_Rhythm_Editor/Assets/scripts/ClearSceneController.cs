@@ -23,14 +23,27 @@ public class ClearSceneController : MonoBehaviour
 
         scoreText.text = "Final Score: " + finalScore.ToString();
         comboText.text = "Max Combo: " + maxCombo.ToString();
-
-        PlayerSongGameData songdata = new PlayerSongGameData();
+       
         SongSelectionManager ssman = new SongSelectionManager();
         upsongid = ssman.ssongid;
-        songdata.songID =  upsongid;
-        songdata.score = finalScore;
-        songdata.combo = maxCombo;
-        songdata.clear = true;
+
+        
+        Debug.Log(BackendGameData.Instance.PlayerSongGameData.Count);
+        for(int i = 0; i < BackendGameData.Instance.PlayerSongGameData.Count; i++)
+        {
+            Debug.Log(BackendGameData.Instance.PlayerSongGameData[i].songID);
+
+            if(BackendGameData.Instance.PlayerSongGameData[i].songID == upsongid)
+            {
+                BackendGameData.Instance.PlayerSongGameData[i].score = finalScore;
+                Debug.Log("X");
+                BackendGameData.Instance.PlayerSongGameData[i].combo = maxCombo;
+                Debug.Log("O");
+                BackendGameData.Instance.PlayerSongGameData[i].clear = true;
+
+                break;
+            }
+        }
 
         BackendGameData.Instance.PlayerSongDataUpdate(upsongid);
     }

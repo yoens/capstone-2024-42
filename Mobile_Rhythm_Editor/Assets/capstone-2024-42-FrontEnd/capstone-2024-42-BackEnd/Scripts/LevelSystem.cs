@@ -39,7 +39,7 @@ public class LevelSystem : MonoBehaviour {
 
         if(character_num < 0)
         {
-            Debug.Log("·¹º§ - Ä³¸¯ÅÍ ID °ªÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.");
+            Debug.Log("ë ˆë²¨ - ìºë¦­í„° ID ê°’ì´ ìž˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.");
         }
 
         BackendGameData.Instance.PlayerCharacterGameData[character_num].characterExp += increaseExperience;
