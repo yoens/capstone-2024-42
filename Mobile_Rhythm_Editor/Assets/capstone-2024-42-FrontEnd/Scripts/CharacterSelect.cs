@@ -19,6 +19,8 @@ public class CharacterSelect : MonoBehaviour
     public void cliked_character(int id)
     {
         characterId = id;
+        string charID = characterId.ToString();
+        CharacterSpriteManager.Instance.determinchar(charID);
         Cname.text = Character.character_name[id];
         Cteam.text = Character.character_team[id];
         //image.sprite = sprites[id];
