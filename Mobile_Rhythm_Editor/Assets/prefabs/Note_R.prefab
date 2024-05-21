@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2195547685709734186}
   - component: {fileID: 9147675317375625479}
   - component: {fileID: 5465367345480891204}
+  - component: {fileID: -5007621756477315722}
   m_Layer: 0
   m_Name: Note_R
   m_TagString: Note_R
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4, y: 4.3, z: 8}
-  m_LocalScale: {x: 0.2, y: 0.45, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -101,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 0}
-  speed: 100
+  speed: 80
 --- !u!61 &5465367345480891204
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,3 +149,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-5007621756477315722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139511073661936853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0199a68f00546b94e9e1f82b68801f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  judgmentLine: {fileID: 114641945829915431, guid: 966f4262dffc82a8fb3fe887913456c4, type: 3}
+  perfectThreshold: 0.05
+  greatThreshold: 0.1
+  goodThreshold: 0.15
+  effectPrefab: {fileID: 4236083479456238361, guid: 0f013108e07e2f977a1f67defc3b595d, type: 3}
+  spriteManager: {fileID: 5477428804899138701, guid: 986956ff645799bf5a58abad0b08ad37, type: 3}

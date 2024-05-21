@@ -2,28 +2,73 @@ using UnityEngine;
 
 public class CharacterSpriteManager : MonoBehaviour
 {
+    public static CharacterSpriteManager Instance { get; private set; }
+    public string character_select_ID { get; private set; } 
     public SpriteRenderer characterRenderer;
+    public Sprite missSprite1;
+    public Sprite goodSprite1;
+    public Sprite greatSprite1;
+    public Sprite perfectSprite1;
     public Sprite missSprite;
     public Sprite goodSprite;
     public Sprite greatSprite;
     public Sprite perfectSprite;
 
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);  // 씬 전환시 객체 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        } 
+    }
+    public void determinchar(string judg)
+    {
+        character_select_ID = judg;
+    }
+
+
     public void ChangeSprite(string judgment)
     {
-        switch (judgment)
+        if(character_select_ID == "0")
         {
-            case "Miss":
-                characterRenderer.sprite = missSprite;
-                break;
-            case "Good":
-                characterRenderer.sprite = goodSprite;
-                break;
-            case "Great":
-                characterRenderer.sprite = greatSprite;
-                break;
-            case "Perfect":
-                characterRenderer.sprite = perfectSprite;
-                break;
+            switch (judgment)
+            {
+                case "Miss":
+                    characterRenderer.sprite = missSprite1;
+                    break;
+                case "Good":
+                    characterRenderer.sprite = goodSprite1;
+                    break;
+                case "Great":
+                    characterRenderer.sprite = greatSprite1;
+                    break;
+                case "Perfect":
+                    characterRenderer.sprite = perfectSprite1;
+                    break;
+            }
+        }
+        else if(character_select_ID == "1")
+        {
+            switch (judgment)
+            {
+                case "Miss":
+                    characterRenderer.sprite = missSprite;
+                    break;
+                case "Good":
+                    characterRenderer.sprite = goodSprite;
+                    break;
+                case "Great":
+                    characterRenderer.sprite = greatSprite;
+                    break;
+                case "Perfect":
+                    characterRenderer.sprite = perfectSprite;
+                    break;
+            }
         }
     }
 }
