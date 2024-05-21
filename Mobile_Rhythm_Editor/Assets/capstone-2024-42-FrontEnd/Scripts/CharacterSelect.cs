@@ -10,6 +10,7 @@ public class CharacterSelect : MonoBehaviour
 
     public TMP_Text Cname;
     public TMP_Text Cteam;
+    public TMP_Text Cprofile;
 
     public Image image;
     public Sprite[] sprites;
@@ -19,17 +20,16 @@ public class CharacterSelect : MonoBehaviour
     public void cliked_character(int id)
     {
         characterId = id;
-        string charID = characterId.ToString();
-        CharacterSpriteManager.Instance.determinchar(charID);
         Cname.text = Character.character_name[id];
         Cteam.text = Character.character_team[id];
-        //image.sprite = sprites[id];
+        Cprofile.text = Character.character_profile[id];
+        image.sprite = sprites[id];
         panel.gameObject.SetActive(true);
     }
 
     public void touch_character_select_button()
     {
-        User.character = characterId;
+        User.user.character = characterId;
     }
 }
 
