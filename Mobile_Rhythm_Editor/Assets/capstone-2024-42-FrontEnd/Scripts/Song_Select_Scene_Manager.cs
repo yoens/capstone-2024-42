@@ -62,8 +62,10 @@ public class Song_Select_Scene_Manager : MonoBehaviour
 
     public void touch_select() // �� ���� ��ư Ŭ�� �� �÷��� �� �� id ����
     {
-        play_song_id = currentItem +1;
+        play_song_id = currentItem;
+        SongSelectionManager.Instance.ssongid = currentItem;
         string selectedSongID = play_song_id.ToString();
+        Debug.LogError("곡" + selectedSongID);
         if (SongSelectionManager.Instance != null)
         {
             SongSelectionManager.Instance.SelectSong(selectedSongID);
