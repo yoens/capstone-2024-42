@@ -8,7 +8,7 @@ public class SongSelectionManager : MonoBehaviour
 
     public string SelectedSongJsonPath { get; private set; }
     public string SelectedSongID { get; private set; } 
-
+    public int ssongid;
     void Awake()
     {
         if (Instance == null)
