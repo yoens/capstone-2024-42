@@ -35,7 +35,7 @@ public class Shop_Manager : MonoBehaviour
         Sname.text = Song.s_name[id];
         Aname.text = Song.artist[id];
         Dif.text = Song.difficulty[id];
-        Gold.text = User.gold.ToString();
+        Gold.text = User.user.gold.ToString();
         song_image.sprite = song_image_sprite[id - 5];
         panel.gameObject.SetActive(true);
     }
@@ -43,7 +43,7 @@ public class Shop_Manager : MonoBehaviour
     public void touched_buy_song()
     {
         Song.user_song[Song.user_song_count++] = song_id;
-        User.gold -= 1000;
+        User.user.gold -= 1000;
         panel.gameObject.SetActive(false);
     }
 }

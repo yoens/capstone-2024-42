@@ -18,12 +18,12 @@ public class Uer_Info_Manager : MonoBehaviour
 
     void Start()
     {
-        Text_uid.text = User.uid.ToString();
-        Text_user_name.text = User.user_name.ToString();
-        Text_user_level.text = User.user_level.ToString();
-        Text_user_ranking.text = User.ranking.ToString();
-        Text_user_score.text = User.score.ToString();
+        Text_uid.text = User.user.uid.ToString();
+        Text_user_name.text = User.user.name.ToString();
+        Text_user_level.text = User.user.level.ToString();
+        Text_user_ranking.text = User.user.ranking.ToString();
+        Text_user_score.text = User.user.score.ToString();
 
-        daepyo_character_image.sprite = character_image_sprite[User.character];
+        daepyo_character_image.sprite = character_image_sprite[User.user.character];
     }
 }
