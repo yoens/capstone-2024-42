@@ -1,31 +1,39 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 
 public class NoteJudgment : MonoBehaviour
-{   public Transform judgmentLine_Y;
+{
+    public Transform judgmentLine_Y;
     public Transform judgmentLine_G;
     public Transform judgmentLine_R;
     public GameObject effectPrefab_Y;
     public GameObject effectPrefab_G;
     public GameObject effectPrefab_R;
+    public Button yellowButton;
+    public Button greenButton;
+    public Button redButton;
 
-    public float perfectThreshold = 0.1f;
-    public float greatThreshold = 0.2f;
-    public float goodThreshold = 0.3f;
+    public float perfectThreshold = 1.0f;
+    public float greatThreshold = 2.0f;
+    public float goodThreshold = 3.0f;
     public CharacterSpriteManager spriteManager;
 
     private List<GameObject> notesInPlay = new List<GameObject>();
 
     private void Awake()
     {
-        spriteManager = FindObjectOfType<CharacterSpriteManager>(); // 씬에서 스프라이트 매니저 찾기
+        spriteManager = FindObjectOfType<CharacterSpriteManager>();
+        yellowButton.onClick.AddListener(() => TriggerJudgment(judgmentLine_Y));
+        greenButton.onClick.AddListener(() => TriggerJudgment(judgmentLine_G));
+        redButton.onClick.AddListener(() => TriggerJudgment(judgmentLine_R));
     }
 
     void Update()
     {
         UpdateNotesInPlay();
-        CheckMissedNotes();
+        CheckForMissedNotes();
     }
 
     void UpdateNotesInPlay()
@@ -36,26 +44,20 @@ public class NoteJudgment : MonoBehaviour
         notesInPlay.AddRange(GameObject.FindGameObjectsWithTag("Note_R"));
     }
 
-    void CheckMissedNotes()
+    void CheckForMissedNotes()
     {
-        for (int i = notesInPlay.Count - 1; i >= 0; i--)
+        foreach (var note in notesInPlay.ToList())
         {
-            var note = notesInPlay[i];
-            Transform specificJudgmentLine = GetJudgmentLine(note.tag);
-
-            if (specificJudgmentLine != null && note.transform.position.y < specificJudgmentLine.position.y)
+            Transform judgmentLine = GetJudgmentLine(note.tag);
+            if (note.transform.position.y < judgmentLine.position.y)
             {
-                Debug.Log("Miss: " + note.tag);
+                Debug.Log("Miss detected for: " + note.tag);
                 PerformMissAction();
                 Destroy(note);
-                notesInPlay.RemoveAt(i);
+                notesInPlay.Remove(note);
             }
         }
     }
-
-    public void JudgeClosestNote_Y() { JudgeClosestNote("Note_Y", judgmentLine_Y); }
-    public void JudgeClosestNote_G() { JudgeClosestNote("Note_G", judgmentLine_G); }
-    public void JudgeClosestNote_R() { JudgeClosestNote("Note_R", judgmentLine_R); }
 
     private Transform GetJudgmentLine(string noteType)
     {
@@ -66,41 +68,67 @@ public class NoteJudgment : MonoBehaviour
             case "Note_R": return judgmentLine_R;
             default: return null;
         }
+    }   
+
+    private void TriggerJudgment(Transform judgmentLine)
+    {
+        var collider = judgmentLine.GetComponent<Collider2D>();
+        var result = new List<Collider2D>();
+        ContactFilter2D filter = new ContactFilter2D().NoFilter();
+        collider.Overlap(filter, result);
+
+        foreach (var hit in result)
+        {
+            if (hit.CompareTag("Note_Y") || hit.CompareTag("Note_G") || hit.CompareTag("Note_R"))
+            {
+                JudgeNoteBasedOnDistance(hit.gameObject, judgmentLine);
+            }
+        }
     }
 
-    private void JudgeClosestNote(string noteType, Transform specificJudgmentLine)
+    private void JudgeNoteBasedOnDistance(GameObject note, Transform judgmentLine)
     {
-        var notes = notesInPlay.Where(note => note.tag == noteType && note.transform.position.y >= specificJudgmentLine.position.y - goodThreshold).ToList();
-        GameObject closestNote = null;
-        float minDistance = float.MaxValue;
+        float distance = Vector2.Distance(note.transform.position, judgmentLine.position);
+        string judgment = DetermineJudgment(distance);
+        Debug.Log(note.tag + " " + judgment);
 
-        foreach (GameObject note in notes)
-        {
-            float distance = Mathf.Abs(note.transform.position.y - specificJudgmentLine.position.y);
-            if (distance < minDistance)
-            {
-                closestNote = note;
-                minDistance = distance;
-            }
-        }
+        ApplyEffectsAndCleanup(note, judgmentLine, judgment);
+    }
 
-        if (closestNote != null)
+    private string DetermineJudgment(float distance)
+    {
+        if (distance <= perfectThreshold)
         {
-            string judgment = DetermineJudgment(closestNote, specificJudgmentLine);
-            if (judgment != null)
-            {
-                Debug.Log(noteType + " " + judgment);
-                GameObject effectPrefab = GetEffectPrefab(noteType);
-                if (effectPrefab != null)
-                {
-                    GameObject effect = Instantiate(effectPrefab, specificJudgmentLine.position, Quaternion.Euler(0, 0, 315));
-                    Destroy(effect, 1f);
-                    Debug.Log("Effect created for " + noteType);
-                }
-                Destroy(closestNote);
-                notesInPlay.Remove(closestNote);
-            }
+            PerformAction(100, 1, 1);
+            return "Perfect";
         }
+        else if (distance <= greatThreshold)
+        {
+            PerformAction(80, 1, 1);
+            return "Great";
+        }
+        else if (distance <= goodThreshold)
+        {
+            PerformAction(50, 1, 1);
+            return "Good";
+        }
+        else
+        {
+            PerformMissAction();
+            return "Miss";
+        }
+    }
+
+    private void ApplyEffectsAndCleanup(GameObject note, Transform judgmentLine, string judgment)
+    {
+        GameObject effectPrefab = GetEffectPrefab(note.tag);
+        if (effectPrefab != null)
+        {
+            GameObject effect = Instantiate(effectPrefab, judgmentLine.position, Quaternion.Euler(0, 0, 315));
+            Destroy(effect, 1f);
+            Debug.Log("Effect created for " + note.tag);
+        }
+        Destroy(note);
     }
 
     private GameObject GetEffectPrefab(string noteType)
@@ -112,42 +140,6 @@ public class NoteJudgment : MonoBehaviour
             case "Note_R": return effectPrefab_R;
             default: return null;
         }
-    }
-
-    private string DetermineJudgment(GameObject note, Transform specificJudgmentLine)
-    {
-        float distance = Mathf.Abs(note.transform.position.y - specificJudgmentLine.position.y);
-        string result;
-        if (distance <= perfectThreshold)
-        {
-            PerformAction(100, 1, 1);
-            result = "Perfect";
-        }
-        else if (distance <= greatThreshold)
-        {
-            PerformAction(80, 1, 1);
-            result = "Great";
-        }
-        else if (distance <= goodThreshold)
-        {
-            PerformAction(50, 1, 1);
-            result = "Good";
-        }
-        else if (note.transform.position.y < specificJudgmentLine.position.y)
-        {
-            PerformMissAction();
-            result = "Miss";
-        }
-        else
-        {
-            return null; // 판정선을 넘기 전이면 판정하지 않음
-        }
-
-        if (spriteManager != null)
-        {
-            spriteManager.ChangeSprite(result);
-        }
-        return result;
     }
 
     private void PerformAction(int score, int combo, int points)
@@ -169,6 +161,6 @@ public class NoteJudgment : MonoBehaviour
         if (ComboManager.Instance != null)
             ComboManager.Instance.ResetCombo();
         if (LifeManager.Instance != null)
-            LifeManager.Instance.Minus(3);
+            LifeManager.Instance.Minus(0);
     }
 }

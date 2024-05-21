@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4, y: 4.3, z: 8}
-  m_LocalScale: {x: 0.4, y: 0.45, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centerPoint: {fileID: 0}
-  speed: 80
+  speed: 60
 --- !u!61 &5465367345480891204
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -161,9 +161,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0199a68f00546b94e9e1f82b68801f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  judgmentLine: {fileID: 114641945829915431, guid: 966f4262dffc82a8fb3fe887913456c4, type: 3}
-  perfectThreshold: 0.05
-  greatThreshold: 0.1
-  goodThreshold: 0.15
-  effectPrefab: {fileID: 4236083479456238361, guid: 0f013108e07e2f977a1f67defc3b595d, type: 3}
-  spriteManager: {fileID: 5477428804899138701, guid: 986956ff645799bf5a58abad0b08ad37, type: 3}
