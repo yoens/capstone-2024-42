@@ -3,7 +3,7 @@ using UnityEngine;
 public class CharacterSpriteManager : MonoBehaviour
 {
     public static CharacterSpriteManager Instance { get; private set; }
-    public string character_select_ID { get; private set; } 
+    public int character_select_ID { get; set; } 
     public SpriteRenderer characterRenderer;
     public Sprite missSprite1;
     public Sprite goodSprite1;
@@ -26,15 +26,11 @@ public class CharacterSpriteManager : MonoBehaviour
             Destroy(gameObject);
         } 
     }
-    public void determinchar(string judg)
-    {
-        character_select_ID = judg;
-    }
 
 
     public void ChangeSprite(string judgment)
     {
-        if(character_select_ID == "0")
+        if(character_select_ID == 0)
         {
             switch (judgment)
             {
@@ -52,7 +48,7 @@ public class CharacterSpriteManager : MonoBehaviour
                     break;
             }
         }
-        else if(character_select_ID == "1")
+        else if(character_select_ID == 1)
         {
             switch (judgment)
             {
