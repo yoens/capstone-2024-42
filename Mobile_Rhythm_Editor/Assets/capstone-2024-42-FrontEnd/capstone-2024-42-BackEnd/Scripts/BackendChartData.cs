@@ -47,7 +47,7 @@ public class BackendChartData : MonoBehaviour
     public static void LoadAllChart()
     {
         LoadSongChart();
-//        LoadCharacterChart();
+        LoadCharacterChart();
         LoadLevelChart();
     }
 
@@ -134,6 +134,42 @@ public class BackendChartData : MonoBehaviour
 
     public static void LoadCharacterChart()
     {
+        Backend.Chart.GetChartContents(Constants.CHARACTER_CHART, callback => {
+            if (callback.IsSuccess())
+            {
+                try
+                {
+                    LitJson.JsonData jsonData = callback.FlattenRows();
 
+                    if (jsonData.Count <= 0)
+                    {
+                        Debug.LogWarning("데이터 미존재");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < jsonData.Count; ++i)
+                        {
+                            CharacterChartData newChart = new CharacterChartData();
+
+                            newChart.characterID = int.Parse(jsonData[i]["CharacterID"].ToString());
+                            newChart.characterName = jsonData[i]["CharacterName"].ToString();
+                            newChart.characterProfile = jsonData[i]["CharacterProfile"].ToString();
+                            newChart.characterTeam = jsonData[i]["CharacterTeam"].ToString();
+                            characterChart.Add(newChart);
+
+                            Debug.Log($"CharacterID : {newChart.characterID}, CharacterName : {newChart.characterName}, CharacterTeam : {newChart.characterTeam}");
+                        }
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError(e);
+                }
+            }
+            else
+            {
+                Debug.LogError($"{Constants.CHARACTER_CHART}차트 불러오기 에러 : {callback}");
+            }
+        });
     }
 }

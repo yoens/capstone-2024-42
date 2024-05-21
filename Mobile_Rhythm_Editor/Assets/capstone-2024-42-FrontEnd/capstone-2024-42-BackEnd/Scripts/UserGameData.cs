@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
 
-public class UserGameData : MonoBehaviour
+public class UserGameData
 {
     public string nickname = Backend.UserNickName;
     public string ownerIndate = Backend.UserInDate;
@@ -22,8 +22,14 @@ public class UserGameData : MonoBehaviour
     {
 
     }
-    private void Reset()
+    public void Reset()
     {
+        level = 1;
+        userExp = 0;
+        userScore = 0;
+        dailyScore = 0;
+        money = 0;
+        selectCharacter_num = 0;
     }
 
     public Param ToParam()
@@ -41,13 +47,11 @@ public class UserGameData : MonoBehaviour
 
     public void Json_write(LitJson.JsonData gameDataJson)
     {
-        ownerIndate = gameDataJson[0]["InDate"].ToString();
         level = int.Parse(gameDataJson[0]["Level"].ToString());
         money = int.Parse(gameDataJson[0]["Money"].ToString());
         userExp = int.Parse(gameDataJson[0]["UserExp"].ToString());
         userScore = int.Parse(gameDataJson[0]["UserScore"].ToString());
         dailyScore = int.Parse(gameDataJson[0]["DailyScore"].ToString());
         selectCharacter_num = int.Parse(gameDataJson[0]["SelectCharacter"].ToString());
-
     }
 }

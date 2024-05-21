@@ -6,7 +6,7 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class PlayerSongGameData : MonoBehaviour
+public class PlayerSongGameData
 {
     public string ownerIndate = Backend.UserInDate;
     public int songID;
@@ -21,6 +21,10 @@ public class PlayerSongGameData : MonoBehaviour
 
     private void Reset()
     {
+        songID = 0;
+        score = 0;
+        combo = 0;
+        clear = false;
     }
 
     public Param ToParam()
@@ -36,7 +40,6 @@ public class PlayerSongGameData : MonoBehaviour
 
     public void Json_write(LitJson.JsonData gameDataJson)
     {   
-        ownerIndate = gameDataJson[0]["InDate"].ToString();
         songID = int.Parse(gameDataJson[0]["SongID"].ToString());
         score = int.Parse(gameDataJson[0]["Score"].ToString());
         combo = int.Parse(gameDataJson[0]["Combo"].ToString());

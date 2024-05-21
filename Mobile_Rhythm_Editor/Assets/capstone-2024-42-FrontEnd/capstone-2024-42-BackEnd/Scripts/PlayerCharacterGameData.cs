@@ -6,7 +6,7 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class PlayerCharacterGameData : MonoBehaviour
+public class PlayerCharacterGameData
 {
     public string ownerIndate = Backend.UserInDate;
     public int characterID;
@@ -21,6 +21,10 @@ public class PlayerCharacterGameData : MonoBehaviour
 
     private void Reset()
     {
+        characterID = 0;
+        characterLevel = 1;
+        characterExp = 0;
+        count = 0;
     }
 
     public Param ToParam()
@@ -36,7 +40,6 @@ public class PlayerCharacterGameData : MonoBehaviour
 
     public void Json_write(LitJson.JsonData gameDataJson)
     {
-        ownerIndate = gameDataJson[0]["InDate"].ToString();
         characterLevel = int.Parse(gameDataJson[0]["CharacterLevel"].ToString());
         characterExp = int.Parse(gameDataJson[0]["CharacterExp"].ToString());
         characterID = int.Parse(gameDataJson[0]["CharacterID"].ToString());

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
 using JetBrains.Annotations;
 using UnityEngine.TextCore.Text;
+using Unity.VisualScripting;
 
 public class BackendGameData
 {
@@ -69,11 +70,10 @@ public class BackendGameData
         {
             if (call_back.IsSuccess())
             {
-                Debug.LogError(call_back.ToString());
+                Debug.Log(call_back.ToString());
 
                 try
                 {
-
                     LitJson.JsonData gameDataJson = call_back.FlattenRows();
 
                     if (gameDataJson.Count <= 0)
@@ -83,15 +83,23 @@ public class BackendGameData
                     }
                     else
                     {
-                        UserGameData.Json_write(gameDataJson);
+                        UserDataRowInDate = gameDataJson[0]["inDate"].ToString();
+                        userGameData.Json_write(gameDataJson);
 
                         onGameDataLoadEvent?.Invoke();
+
+                        Debug.Log($"유저 정보 데이터 로드 성공");
                     }
                 }
                 catch (System.Exception e)
                 {
+                    userGameData.Reset();
                     Debug.LogError(e);
                 }
+            }
+            else
+            {
+                Debug.Log($"유저 정보 데이터 로드 실패");
             }
         });
     }
@@ -165,13 +173,13 @@ public class BackendGameData
     public void PlayerSongDataLoad(int songID)
     {
         Where where = new Where();
-        Where.Equals("SongID", songID);
+        where.Equal("SongID", songID);
 
         Backend.GameData.GetMyData("PlayerSong", where, call_back =>
         {
             if (call_back.IsSuccess())
             {
-                Debug.LogError(call_back.ToString());
+                Debug.Log(call_back.ToString());
 
                 try
                 {
@@ -184,15 +192,24 @@ public class BackendGameData
                     }
                     else
                     {
-                        playerSongGameData[songID].Json_write(gameDataJson);
+                        SongDataRowInDate = gameDataJson[0]["inDate"].ToString();
+                        PlayerSongGameData SongDataRow = new PlayerSongGameData();
+                        SongDataRow.Json_write(gameDataJson);
+                        playerSongGameData.Add(SongDataRow);
 
                         onGameDataLoadEvent?.Invoke();
+
+                        Debug.Log($"{songID}번째 보유 곡 정보 데이터 로드 성공");
                     }
                 }
                 catch (System.Exception e)
                 {
                     Debug.LogError(e);
                 }
+            }
+            else
+            {
+                Debug.Log($"보유 곡 정보 데이터 로드 실패");
             }
         });
     }
@@ -205,7 +222,15 @@ public class BackendGameData
             return;
         }
 
-        Param param = playerSongGameData[songID].ToParam();
+        Param param = new Param();
+
+        for (int i = 0; i < playerSongGameData.Count; i++)
+        {
+            if (playerSongGameData[i].songID == songID)
+            {
+                param = playerSongGameData[i].ToParam();
+            }
+        }
 
         if (string.IsNullOrEmpty(SongDataRowInDate))
         {
@@ -264,13 +289,13 @@ public class BackendGameData
     public void PlayerCharacterDataLoad(int characterID)
     {
         Where where = new Where();
-        Where.Equals("CharacterID", characterID);
+        where.Equal("CharacterID", characterID);
 
         Backend.GameData.GetMyData("PlayerCharacter", where, call_back =>
         {
             if (call_back.IsSuccess())
             {
-                Debug.LogError(call_back.ToString());
+                Debug.Log(call_back.ToString());
 
                 try
                 {
@@ -283,15 +308,24 @@ public class BackendGameData
                     }
                     else
                     {
-                        playerCharacterGameData[characterID].Json_write(gameDataJson);
+                        CharacterDataRowInDate = gameDataJson[0]["inDate"].ToString();
+                        PlayerCharacterGameData CharacterDataRow = new PlayerCharacterGameData();
+                        CharacterDataRow.Json_write(gameDataJson);
+                        playerCharacterGameData.Add(CharacterDataRow);
 
                         onGameDataLoadEvent?.Invoke();
+
+                        Debug.Log($"{characterID}번째 보유 캐릭터 정보 데이터 로드 성공");
                     }
                 }
                 catch (System.Exception e)
                 {
                     Debug.LogError(e);
                 }
+            }
+            else
+            {
+                Debug.Log($"보유 캐릭터 정보 데이터 로드 실패");
             }
         });
     }
@@ -304,7 +338,15 @@ public class BackendGameData
             return;
         }
 
-        Param param = playerCharacterGameData[characterID].ToParam();
+        Param param = new Param();
+
+        for (int i = 0; i < playerCharacterGameData.Count; i++)
+        {
+            if (playerCharacterGameData[i].characterID == characterID)
+            {
+                param = playerCharacterGameData[i].ToParam();
+            }
+        }
 
         if (string.IsNullOrEmpty(CharacterDataRowInDate))
         {
