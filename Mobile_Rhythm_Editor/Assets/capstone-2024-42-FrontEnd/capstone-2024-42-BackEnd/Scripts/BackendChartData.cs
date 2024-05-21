@@ -36,12 +36,14 @@ public class BackendChartData : MonoBehaviour
     public static List<LevelChartData> levelChart;
     public static List<SongChartData> songChart;
     public static List<CharacterChartData> characterChart;
+    public static List<LevelChartData> characterLevelChart;
 
     static BackendChartData()
     {
         levelChart = new List<LevelChartData>();
         songChart = new List<SongChartData>();
         characterChart = new List<CharacterChartData>();
+        characterLevelChart = new List<LevelChartData>();
     }
 
     public static void LoadAllChart()
@@ -49,6 +51,7 @@ public class BackendChartData : MonoBehaviour
         LoadSongChart();
         LoadCharacterChart();
         LoadLevelChart();
+        LoadCharacterLevelChart();
     }
 
     public static void LoadLevelChart()
@@ -172,4 +175,46 @@ public class BackendChartData : MonoBehaviour
             }
         });
     }
+
+    public static void LoadCharacterLevelChart()
+    {
+        Backend.Chart.GetChartContents(Constants.CHARACTER_LEVEL_CHART, callback => {
+            if (callback.IsSuccess())
+            {
+                try
+                {
+                    LitJson.JsonData jsonData = callback.FlattenRows();
+
+                    if (jsonData.Count <= 0)
+                    {
+                        Debug.LogWarning("데이터 미존재");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < jsonData.Count; ++i)
+                        {
+                            LevelChartData newChart = new LevelChartData();
+                            newChart.level = int.Parse(jsonData[i]["level"].ToString());
+                            newChart.maxExperience = int.Parse(jsonData[i]["maxExperience"].ToString());
+                            newChart.rewardGold = int.Parse(jsonData[i]["rewardGold"].ToString());
+
+                            characterLevelChart.Add(newChart);
+
+                            Debug.Log($"Level : {newChart.level}, Max Exp : {newChart.maxExperience}, Reward Gold : {newChart.rewardGold}");
+                        }
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError(e);
+                }
+            }
+            else
+            {
+                Debug.LogError($"{Constants.CHARACTER_LEVEL_CHART}차트 불러오기 에러 : {callback}");
+            }
+        });
+    }
 }
+
+
