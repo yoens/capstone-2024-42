@@ -15,6 +15,14 @@ public class Song : MonoBehaviour
     public static int[] score = { 100000, 0, 99999, 12345, 0, 0, 0, 0, 0, 0, 0, 0}; // 클리어 한 곡의 최대 점수
     public int[] combo; // 클리어 한 곡의 최대 콤보 수
 
+    void Start()
+    {
+        //Debug.Log(BackendChartData.songChart);
+        /*for(int i = 0; i < 12 ; i++)
+        {
+            s_name[i] = BackendChartData.songChart[i].songName;
+        }*/
+    }
     public void user_song_sort()
     {
         Array.Sort(user_song, 0, user_song_count - 1);

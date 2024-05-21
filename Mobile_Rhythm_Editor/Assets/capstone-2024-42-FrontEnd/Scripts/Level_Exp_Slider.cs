@@ -11,11 +11,12 @@ public class Level_Exp_Slider : MonoBehaviour
 
     void Start()
     {
-        if (User.exp == 0) gauge.gameObject.SetActive(false);
+        int e = User.user.exp;
+        if (e == 0) gauge.gameObject.SetActive(false);
         else
         {
             gauge.gameObject.SetActive(true);
-            user_exp_bar.value = (float)User.exp / (float)max_exp;
+            user_exp_bar.value = (float)e / (float)max_exp;
         }
     }
 }
