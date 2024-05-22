@@ -9,9 +9,7 @@ public class ClearSceneController : MonoBehaviour
     public Text scoreText;
     public Text comboText;
     public bool clear = true;
-    public int characterID;
-    public int characterLevel;
-    public int characterExp;
+    public int characterExp_game;
     public int count;
 
     void Start()
@@ -19,15 +17,25 @@ public class ClearSceneController : MonoBehaviour
         int finalScore = ScoreManager.Instance.Score;
         int maxCombo = ComboManager.Instance.MaxCombo;
         int upsongid;
-        characterExp = finalScore / 1000;
+        int charid_game;
+        charid_game = User.user.character;
+        characterExp_game = finalScore / 1000;
 
         scoreText.text = "Final Score: " + finalScore.ToString();
         comboText.text = "Max Combo: " + maxCombo.ToString();
        
+
+        for(int i =0; i < BackendGameData.Instance.PlayerCharacterGameData.Count; i++)
+        {
+            if(BackendGameData.Instance.PlayerCharacterGameData[i].characterID == charid_game)
+            {
+                BackendGameData.Instance.PlayerCharacterGameData[i].characterExp += characterExp_game;
+            }
+        }
+        BackendGameData.Instance.PlayerCharacterDataUpdate(charid_game);
+
         SongSelectionManager ssman = new SongSelectionManager();
         upsongid = ssman.ssongid;
-
-        
         Debug.Log(BackendGameData.Instance.PlayerSongGameData.Count);
         for(int i = 0; i < BackendGameData.Instance.PlayerSongGameData.Count; i++)
         {
@@ -46,5 +54,7 @@ public class ClearSceneController : MonoBehaviour
         }
 
         BackendGameData.Instance.PlayerSongDataUpdate(upsongid);
+
+
     }
 }

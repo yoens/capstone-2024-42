@@ -27,7 +27,6 @@ public class CharacterSelect : MonoBehaviour
         Cprofile.text = Character.character_profile[id];
         image.sprite = sprites[id];
         panel.gameObject.SetActive(true);
-        CharacterSpriteManager.Instance.character_select_ID = id;
     }
 
     public void touch_character_select_button()

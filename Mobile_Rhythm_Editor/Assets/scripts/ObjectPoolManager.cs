@@ -5,8 +5,8 @@ public class ObjectPoolManager : MonoBehaviour
     public ObjectPool poolNoteG;
     public ObjectPool poolNoteY;
     public ObjectPool poolNoteR;
-    public ObjectPool poolMarker;  // 마커를 위한 오브젝트 풀 추가
-
+    public ObjectPool poolMarkerUp; 
+    public ObjectPool poolMarkerDown;
     public GameObject GetObject(string type)
     {
         switch (type)
@@ -18,7 +18,7 @@ public class ObjectPoolManager : MonoBehaviour
             case "Note_R":
                 return poolNoteR.GetObject();
             case "Marker":
-                return poolMarker.GetObject();  // 마커용 풀을 사용
+                return Random.value > 0.5f ? poolMarkerUp.GetObject() : poolMarkerDown.GetObject();
             default:
                 Debug.LogError("Invalid type requested: " + type);
                 return null;
@@ -39,7 +39,14 @@ public class ObjectPoolManager : MonoBehaviour
                 poolNoteR.ReturnObject(obj);
                 break;
             case "Marker":
-                poolMarker.ReturnObject(obj);  // 마커 반환
+                if (obj.GetComponent<MarkerType>().IsUpMarker)
+                {
+                    poolMarkerUp.ReturnObject(obj);
+                }
+                else
+                {
+                    poolMarkerDown.ReturnObject(obj);
+                }
                 break;
             default:
                 Debug.LogError("Invalid type returned: " + type);
