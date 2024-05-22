@@ -6,6 +6,7 @@ using UnityEngine.SocialPlatforms;
 using JetBrains.Annotations;
 using UnityEngine.TextCore.Text;
 using Unity.VisualScripting;
+using System;
 
 public class BackendGameData
 {
@@ -145,37 +146,37 @@ public class BackendGameData
         }
     }
 
-    public void PlayerSongDataInsert(int songID)
+    public void PlayerSongDataInsert()
     {
         PlayerSongGameData gameData = new PlayerSongGameData();
-        gameData.songID = songID;
-        Param param = gameData.ToParam();
-
-        Backend.GameData.Insert("PlayerSong", param, callback =>
+        for (int i = 0; i < Constants.SONG_NUMBER; i++)
         {
-            if (callback.IsSuccess())
+            gameData.songID = i;
+            Param param = gameData.ToParam();
+
+            Backend.GameData.Insert("PlayerSong", param, callback =>
             {
-                SongDataRowInDate = callback.GetInDate();
-                Debug.Log("내 Player Song Info의 indate : " + SongDataRowInDate);
-            }
-            else
-            {
-                Debug.LogError("곡 게임 정보 삽입 실패 : " + callback.ToString());
-                if (callback.IsClientRequestFailError())
+                if (callback.IsSuccess())
                 {
-                    Debug.Log("네트워크가 일시적으로 끊어졌을 경우");
-                    //                    UserDataInsert();
+                    SongDataRowInDate = callback.GetInDate();
+                    Debug.Log("내 Player Song Info의 indate : " + SongDataRowInDate);
                 }
-            }
-        });
+                else
+                {
+                    Debug.LogError("곡 게임 정보 삽입 실패 : " + callback.ToString());
+                    if (callback.IsClientRequestFailError())
+                    {
+                        Debug.Log("네트워크가 일시적으로 끊어졌을 경우");
+                        //                    UserDataInsert();
+                    }
+                }
+            });
+        }
     }
 
-    public void PlayerSongDataLoad(int songID)
+    public void PlayerSongDataLoad()
     {
-        Where where = new Where();
-        where.Equal("SongID", songID);
-
-        Backend.GameData.GetMyData("PlayerSong", where, call_back =>
+        Backend.GameData.GetMyData("PlayerSong", new Where(), Constants.SONG_NUMBER, call_back =>
         {
             if (call_back.IsSuccess())
             {
@@ -192,14 +193,17 @@ public class BackendGameData
                     }
                     else
                     {
-                        SongDataRowInDate = gameDataJson[0]["inDate"].ToString();
-                        PlayerSongGameData SongDataRow = new PlayerSongGameData();
-                        SongDataRow.Json_write(gameDataJson);
-                        playerSongGameData.Add(SongDataRow);
+                        for (int i = 0; i < Constants.SONG_NUMBER; i++)
+                        {
+                            SongDataRowInDate = gameDataJson[i]["inDate"].ToString();
+                            PlayerSongGameData SongDataRow = new PlayerSongGameData();
+                            SongDataRow.Json_write(gameDataJson, i);
+                            playerSongGameData.Add(SongDataRow);
 
-                        onGameDataLoadEvent?.Invoke();
+                            onGameDataLoadEvent?.Invoke();
 
-                        Debug.Log($"{songID}번째 보유 곡 정보 데이터 로드 성공");
+                            Debug.Log($"{i}번째 보유 곡 정보 데이터 로드 성공");
+                        }
                     }
                 }
                 catch (System.Exception e)
@@ -261,37 +265,50 @@ public class BackendGameData
         }
     }
 
-    public void PlayerCharacterDataInsert(int CharacterID)
+    public void PlayerSongDataSort()
+    {
+        playerSongGameData.Sort((x, y) =>
+        {
+            return x.songID.CompareTo(y.songID);
+        });
+
+        foreach (PlayerSongGameData data in playerSongGameData)
+        {
+            Console.WriteLine($"SID : {data.songID}");
+        }
+    }
+
+    public void PlayerCharacterDataInsert()
     {
         PlayerCharacterGameData gameData = new PlayerCharacterGameData();
-        gameData.characterID = CharacterID;
-        Param param = gameData.ToParam();
-
-        Backend.GameData.Insert("PlayerCharacter", param, callback =>
+        for (int i = 0; i < Constants.CHARACTER_NUMBER; i++)
         {
-            if (callback.IsSuccess())
+            gameData.characterID = i;
+            Param param = gameData.ToParam();
+
+            Backend.GameData.Insert("PlayerCharacter", param, callback =>
             {
-                CharacterDataRowInDate = callback.GetInDate();
-                Debug.Log("내 Player Character Info의 indate : " + CharacterDataRowInDate);
-            }
-            else
-            {
-                Debug.LogError("보유 캐릭터 게임 정보 삽입 실패 : " + callback.ToString());
-                if (callback.IsClientRequestFailError())
+                if (callback.IsSuccess())
                 {
-                    Debug.Log("네트워크가 일시적으로 끊어졌을 경우");
-                    //                    UserDataInsert();
+                    CharacterDataRowInDate = callback.GetInDate();
+                    Debug.Log("내 Player Character Info의 indate : " + CharacterDataRowInDate);
                 }
-            }
-        });
+                else
+                {
+                    Debug.LogError("보유 캐릭터 게임 정보 삽입 실패 : " + callback.ToString());
+                    if (callback.IsClientRequestFailError())
+                    {
+                        Debug.Log("네트워크가 일시적으로 끊어졌을 경우");
+                        //                    UserDataInsert();
+                    }
+                }
+            });
+        }
     }
  
-    public void PlayerCharacterDataLoad(int characterID)
+    public void PlayerCharacterDataLoad()
     {
-        Where where = new Where();
-        where.Equal("CharacterID", characterID);
-
-        Backend.GameData.GetMyData("PlayerCharacter", where, call_back =>
+        Backend.GameData.GetMyData("PlayerCharacter", new Where(), Constants.CHARACTER_NUMBER, call_back =>
         {
             if (call_back.IsSuccess())
             {
@@ -308,14 +325,17 @@ public class BackendGameData
                     }
                     else
                     {
-                        CharacterDataRowInDate = gameDataJson[0]["inDate"].ToString();
-                        PlayerCharacterGameData CharacterDataRow = new PlayerCharacterGameData();
-                        CharacterDataRow.Json_write(gameDataJson);
-                        playerCharacterGameData.Add(CharacterDataRow);
+                        for (int i = 0; i < Constants.CHARACTER_NUMBER; i++)
+                        {
+                            CharacterDataRowInDate = gameDataJson[i]["inDate"].ToString();
+                            PlayerCharacterGameData CharacterDataRow = new PlayerCharacterGameData();
+                            CharacterDataRow.Json_write(gameDataJson, i);
+                            playerCharacterGameData.Add(CharacterDataRow);
 
-                        onGameDataLoadEvent?.Invoke();
+                            onGameDataLoadEvent?.Invoke();
 
-                        Debug.Log($"{characterID}번째 보유 캐릭터 정보 데이터 로드 성공");
+                            Debug.Log($"{i}번째 보유 캐릭터 정보 데이터 로드 성공");
+                        }
                     }
                 }
                 catch (System.Exception e)
@@ -377,4 +397,16 @@ public class BackendGameData
         }
     }
 
+    public void PlayerCharacterDataSort()
+    {
+        playerCharacterGameData.Sort((x, y) =>
+        {
+            return x.characterID.CompareTo(y.characterID);
+        });
+
+        foreach (PlayerCharacterGameData data in playerCharacterGameData)
+        {
+            Console.WriteLine($"CID : {data.characterID}");
+        }
+    }
 }

@@ -16,15 +16,13 @@ public class LobbyScenario : MonoBehaviour
     {
         BackendGameData.Instance.UserDataLoad();
         
-        for (int i = 0; i < Constants.SONG_NUMBER; i++)
-        {
-            BackendGameData.Instance.PlayerSongDataLoad(i);
-        }
+        BackendGameData.Instance.PlayerSongDataLoad();
 
-        for (int i = 0; i < Constants.CHARACTER_NUMBER; i++)
-        {
-            BackendGameData.Instance.PlayerCharacterDataLoad(i);
-        }
+        BackendGameData.Instance.PlayerCharacterDataLoad();
+
+        BackendGameData.Instance.PlayerSongDataSort();
+
+        BackendGameData.Instance.PlayerCharacterDataSort();
 
         //        BackendGameData.Instance.UserGameData.nickname;
 
