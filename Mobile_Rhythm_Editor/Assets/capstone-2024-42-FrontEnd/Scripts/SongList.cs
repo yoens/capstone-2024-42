@@ -25,10 +25,10 @@ public class SongList : MonoBehaviour
 
         }*/
 
-        for (int i = 0; i < Song_Count ; i++)
+        for (int i = 0; i < BackendChartData.songChart.Count ; i++)
         {
-            list_name[i].text = Song.s_name[i];
-            list_difficulty[i].text = Song.difficulty[i];
+            list_name[i].text = BackendChartData.songChart[i].songName;
+            list_difficulty[i].text = BackendChartData.songChart[i].songLevel.ToString();
         }
     }
 }

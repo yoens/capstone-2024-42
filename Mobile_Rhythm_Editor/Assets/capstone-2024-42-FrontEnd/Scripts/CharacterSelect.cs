@@ -19,6 +19,8 @@ public class CharacterSelect : MonoBehaviour
 
     public void cliked_character(int id)
     {
+        Debug.Log("clicked character ");
+        Debug.Log(Character.character_name[id]);
         characterId = id;
         Cname.text = Character.character_name[id];
         Cteam.text = Character.character_team[id];

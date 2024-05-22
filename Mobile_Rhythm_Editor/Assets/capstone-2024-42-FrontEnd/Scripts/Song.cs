@@ -17,11 +17,11 @@ public class Song : MonoBehaviour
 
     void Start()
     {
-        //Debug.Log(BackendChartData.songChart);
-        /*for(int i = 0; i < 12 ; i++)
+        for(int i = 0; i < 12 ; i++)
         {
+            Debug.Log(BackendChartData.songChart[i].songName);
             s_name[i] = BackendChartData.songChart[i].songName;
-        }*/
+        }
     }
     public void user_song_sort()
     {
