@@ -8,6 +8,8 @@ public class Character : MonoBehaviour
     public static List<string> character_name = new List<string>();
     public static List<string> character_team = new List<string>();
     public static List<string> character_profile = new List<string>();
+    public static int character_level = 1;
+    public static int character_exp = 50;
 
     void Start()
     {
@@ -17,7 +19,6 @@ public class Character : MonoBehaviour
             character_name.Add(BackendChartData.characterChart[i].characterName);
             character_team.Add(BackendChartData.characterChart[i].characterTeam);
             character_profile.Add(BackendChartData.characterChart[i].characterProfile);
-            Debug.Log("i = " + i + " Name : " + character_name[i] + " Team = " + character_team[i]);
         }
     }
 }
