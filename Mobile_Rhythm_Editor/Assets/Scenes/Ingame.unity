@@ -3922,11 +3922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fb84500320720b89fa4c0d5e0b6e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centerPoint: {fileID: 405703050}
-  randomMarkers: {fileID: 652432330}
   rotationSpeed: 50
-  sensitivity: 0.1
-  touchCollider: {fileID: 652432329}
 --- !u!58 &652432329
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3981,6 +3977,8 @@ MonoBehaviour:
   markerLifetime: 3
   scorePerSuccess: 100
   objectPoolManager: {fileID: 933111073}
+  customMarkerPosition: {fileID: 405703050}
+  useCustomPosition: 1
 --- !u!1 &724450803
 GameObject:
   m_ObjectHideFlags: 0
@@ -6596,9 +6594,9 @@ MonoBehaviour:
   yellowButton: {fileID: 390487439}
   greenButton: {fileID: 326577366}
   redButton: {fileID: 164701450}
-  perfectThreshold: 0.1
-  greatThreshold: 0.2
-  goodThreshold: 0.3
+  perfectThreshold: 0.15
+  greatThreshold: 0.3
+  goodThreshold: 0.5
   spriteManager: {fileID: 190442357}
 --- !u!1001 &3430671176465039519
 PrefabInstance:

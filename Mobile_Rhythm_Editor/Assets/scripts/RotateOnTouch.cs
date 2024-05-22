@@ -1,38 +1,50 @@
 using UnityEngine;
 
-public class RotateOnTouch : MonoBehaviour
+public class RotateOnDrag : MonoBehaviour
 {
-    public Transform centerPoint;  // 회전의 중심점을 설정합니다.
-    public RandomMarkers randomMarkers;  // RandomMarkers 스크립트 참조
-    public float rotationSpeed = 100f;  // 회전 속도를 조절합니다.
-    public float sensitivity = 0.5f;  // 터치 움직임에 대한 민감도를 조절합니다.
-    public CircleCollider2D touchCollider;  // 원판의 Collider2D
+    private Vector2 previousTouchPosition;
+    private bool isDragging = false;
 
-    private float previousAngle;
-
-    void Start()
-    {
-        previousAngle = transform.eulerAngles.z;
-    }
+    public float rotationSpeed = 100f; // 회전 속도 조절
 
     void Update()
     {
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0); // 첫 번째 터치를 가져옵니다.
-            Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-            touchPos.z = 0;
+            Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Moved && touchCollider.OverlapPoint(touchPos))
+            switch (touch.phase)
             {
-                Vector2 touchDeltaPosition = touch.deltaPosition;
-                float rotation = touchDeltaPosition.x * rotationSpeed * sensitivity * Time.deltaTime;
-                bool shouldRotateClockwise = touchDeltaPosition.x > 0; // x 이동 거리가 양수면 시계 방향 회전
-                transform.RotateAround(centerPoint.position, Vector3.forward, shouldRotateClockwise ? -rotation : rotation);
+                case TouchPhase.Began:
+                    previousTouchPosition = touch.position;
+                    isDragging = true;
+                    break;
 
-                float currentAngle = transform.eulerAngles.z;
-                randomMarkers.UpdateRotation(currentAngle, !shouldRotateClockwise); // 회전 방향을 반대로 전달
-                previousAngle = currentAngle;
+                case TouchPhase.Moved:
+                    if (isDragging)
+                    {
+                        Vector2 currentTouchPosition = touch.position;
+                        float deltaX = currentTouchPosition.x - previousTouchPosition.x;
+
+                        if (deltaX > 0)
+                        {
+                            // x값이 증가하면 시계 반대 방향으로 회전
+                            transform.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
+                        }
+                        else if (deltaX < 0)
+                        {
+                            // x값이 감소하면 시계 방향으로 회전
+                            transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+                        }
+
+                        previousTouchPosition = currentTouchPosition;
+                    }
+                    break;
+
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    isDragging = false;
+                    break;
             }
         }
     }

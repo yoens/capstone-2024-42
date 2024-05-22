@@ -14,10 +14,21 @@ public class RandomMarkers : MonoBehaviour
     private GameObject markerA;
     private bool isRotating = false; // 회전이 시작되었는지 확인
     private bool shouldRotateRight; // 올바른 회전 방향이 오른쪽인지
+    private Vector2 previousTouchPosition;
+    private bool isDragging = false;
+
+    // 마커 생성 지점을 설정하기 위한 변수 수정
+    public Transform customMarkerPosition; // 사용자 지정 마커 위치
+    public bool useCustomPosition = true; // 사용자 지정 위치 사용 여부
 
     void Start()
     {
         StartCoroutine(ShowMarkersWithCountdown());
+    }
+
+    void Update()
+    {
+        HandleTouchInput();
     }
 
     IEnumerator ShowMarkersWithCountdown()
@@ -45,7 +56,17 @@ public class RandomMarkers : MonoBehaviour
     void ActivateMarker()
     {
         markerA = objectPoolManager.GetObject("Marker"); // 랜덤 마커 받아오기
-        markerA.transform.position = GetPositionOnCircle(0); // 마커 위치 설정
+
+        if (useCustomPosition)
+        {
+            // 사용자 지정 위치를 사용하여 마커 위치 설정
+            markerA.transform.position = customMarkerPosition.position;
+        }
+        else
+        {
+            // 기본 원형 위치를 사용하여 마커 위치 설정
+            markerA.transform.position = GetPositionOnCircle(0);
+        }
 
         // 마커 방향을 체크하고 회전 방향 설정
         MarkerType markerType = markerA.GetComponent<MarkerType>();
@@ -91,5 +112,47 @@ public class RandomMarkers : MonoBehaviour
     void OrientMarkerTowardsCenter(GameObject marker)
     {
         marker.transform.rotation = Quaternion.LookRotation(Vector3.forward, centerPoint.position - marker.transform.position);
+    }
+
+    void HandleTouchInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    previousTouchPosition = touch.position;
+                    isDragging = true;
+                    break;
+
+                case TouchPhase.Moved:
+                    if (isDragging)
+                    {
+                        Vector2 currentTouchPosition = touch.position;
+                        float deltaX = currentTouchPosition.x - previousTouchPosition.x;
+
+                        if (deltaX > 0)
+                        {
+                            // x값이 증가하면 시계 반대 방향으로 회전
+                            UpdateRotation(0, false);
+                        }
+                        else if (deltaX < 0)
+                        {
+                            // x값이 감소하면 시계 방향으로 회전
+                            UpdateRotation(0, true);
+                        }
+
+                        previousTouchPosition = currentTouchPosition;
+                    }
+                    break;
+
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    isDragging = false;
+                    break;
+            }
+        }
     }
 }

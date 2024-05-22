@@ -165,6 +165,6 @@ public class NoteJudgment : MonoBehaviour
         if (ComboManager.Instance != null)
             ComboManager.Instance.ResetCombo_play();
         if (LifeManager.Instance != null)
-            LifeManager.Instance.Minus(0);
+            LifeManager.Instance.Minus(2);
     }
 }
