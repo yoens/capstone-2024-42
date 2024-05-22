@@ -6,18 +6,17 @@ using Unity.VisualScripting;
 
 public class RankRegister : MonoBehaviour
 {
-    public void Process(int newScore)
+    public void Process()
     {
-        //        UpdateMyRankData(newScore);
-
         //곡으로 업데이트
-
-        UpdateMyBestRankData(newScore);
+        UpdateMyBestRankData();
     }
 
-    public void UpdateMyBestRankData(int newScore)
+    private void UpdateMyBestRankData()
     {
-        Backend.URank.User.GetMyRank(Constants.DAILY_RANK_UUID, callback => { 
+        int newScore = BackendGameData.Instance.UserGameData.userScore;
+
+        Backend.URank.User.GetMyRank(Constants.USER_RANK_UUID, callback => { 
             if(callback.IsSuccess())
             {
                 try
@@ -57,46 +56,46 @@ public class RankRegister : MonoBehaviour
         });
     }
 
-        private void UpdateMyRankData(int newScore)
+    private void UpdateMyRankData(int newScore)
+    {
+        string rowInDate = string.Empty;
+
+        Backend.GameData.GetMyData(Constants.USER_DATA_TABLE, new Where(), callback =>
         {
-            string rowInDate = string.Empty;
-
-            Backend.GameData.GetMyData(Constants.USER_DATA_TABLE, new Where(), callback =>
+            if (!callback.IsSuccess())
             {
-                if (!callback.IsSuccess())
-                {
-                    Debug.LogError($"데이터 조회 중 문제 발생 : {callback}");
-                    return;
-                }
+                Debug.LogError($"데이터 조회 중 문제 발생 : {callback}");
+                return;
+            }
 
-                Debug.Log($"데이터 조회 성공 : {callback}");
+            Debug.Log($"데이터 조회 성공 : {callback}");
 
-                if (callback.FlattenRows().Count > 0)
-                {
-                    rowInDate = callback.FlattenRows()[0]["inDate"].ToString();
-                }
-                else
-                {
-                    Debug.LogError("데이터 미존재");
-                    return;
-                }
-            });
-
-            Param param = new Param()
+            if (callback.FlattenRows().Count > 0)
             {
-                { "dailyBestScore", newScore }
+                rowInDate = callback.FlattenRows()[0]["inDate"].ToString();
+            }
+            else
+            {
+                Debug.LogError("데이터 미존재");
+                return;
+            }
+        });
+
+        Param param = new Param()
+            {
+                { "UserBestScore", newScore }
             };
 
-            Backend.URank.User.UpdateUserScore(Constants.DAILY_RANK_UUID, Constants.USER_DATA_TABLE, rowInDate, param, callback =>
+        Backend.URank.User.UpdateUserScore(Constants.USER_RANK_UUID, Constants.USER_DATA_TABLE, rowInDate, param, callback =>
+        {
+            if (callback.IsSuccess())
             {
-                if (callback.IsSuccess())
-                {
-                    Debug.Log($"랭킹 등록 성공 : {callback}");
-                }
-                else
-                {
-                    Debug.LogError($"랭킹 등록 실패 : {callback}");
-                }
-            });
-        }
+                Debug.Log($"랭킹 등록 성공 : {callback}");
+            }
+            else
+            {
+                Debug.LogError($"랭킹 등록 실패 : {callback}");
+            }
+        });
+    }
 }

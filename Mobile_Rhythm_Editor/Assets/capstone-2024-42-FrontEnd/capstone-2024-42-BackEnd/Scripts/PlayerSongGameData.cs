@@ -38,11 +38,11 @@ public class PlayerSongGameData
         return param;
     }
 
-    public void Json_write(LitJson.JsonData gameDataJson)
+    public void Json_write(LitJson.JsonData gameDataJson, int ID)
     {   
-        songID = int.Parse(gameDataJson[0]["SongID"].ToString());
-        score = int.Parse(gameDataJson[0]["Score"].ToString());
-        combo = int.Parse(gameDataJson[0]["Combo"].ToString());
-        clear = bool.Parse(gameDataJson[0]["Clear"].ToString());
+        songID = int.Parse(gameDataJson[ID]["SongID"].ToString());
+        score = int.Parse(gameDataJson[ID]["Score"].ToString());
+        combo = int.Parse(gameDataJson[ID]["Combo"].ToString());
+        clear = bool.Parse(gameDataJson[ID]["Clear"].ToString());
     }
 }

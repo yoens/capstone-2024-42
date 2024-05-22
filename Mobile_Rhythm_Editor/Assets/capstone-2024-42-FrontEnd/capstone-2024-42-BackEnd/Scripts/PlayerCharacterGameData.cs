@@ -38,11 +38,11 @@ public class PlayerCharacterGameData
         return param;
     }
 
-    public void Json_write(LitJson.JsonData gameDataJson)
+    public void Json_write(LitJson.JsonData gameDataJson, int ID)
     {
-        characterLevel = int.Parse(gameDataJson[0]["CharacterLevel"].ToString());
-        characterExp = int.Parse(gameDataJson[0]["CharacterExp"].ToString());
-        characterID = int.Parse(gameDataJson[0]["CharacterID"].ToString());
-        count = int.Parse(gameDataJson[0]["Count"].ToString());
+        characterLevel = int.Parse(gameDataJson[ID]["CharacterLevel"].ToString());
+        characterExp = int.Parse(gameDataJson[ID]["CharacterExp"].ToString());
+        characterID = int.Parse(gameDataJson[ID]["CharacterID"].ToString());
+        count = int.Parse(gameDataJson[ID]["Count"].ToString());
     }
 }

@@ -14,7 +14,6 @@ public class UserGameData
     public int level;
     public int userExp;
     public int userScore;
-    public int dailyScore;
     public int money;
     public int selectCharacter_num;
 
@@ -27,7 +26,6 @@ public class UserGameData
         level = 1;
         userExp = 0;
         userScore = 0;
-        dailyScore = 0;
         money = 0;
         selectCharacter_num = 0;
     }
@@ -40,7 +38,6 @@ public class UserGameData
         param.Add("SelectCharacter", selectCharacter_num);
         param.Add("UserExp", userExp);
         param.Add("UserScore", userScore);
-        param.Add("DailyScore", dailyScore);
 
         return param;
     }
@@ -51,7 +48,6 @@ public class UserGameData
         money = int.Parse(gameDataJson[0]["Money"].ToString());
         userExp = int.Parse(gameDataJson[0]["UserExp"].ToString());
         userScore = int.Parse(gameDataJson[0]["UserScore"].ToString());
-        dailyScore = int.Parse(gameDataJson[0]["DailyScore"].ToString());
         selectCharacter_num = int.Parse(gameDataJson[0]["SelectCharacter"].ToString());
     }
 }

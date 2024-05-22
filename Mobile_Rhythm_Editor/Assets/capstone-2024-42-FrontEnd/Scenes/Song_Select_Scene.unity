@@ -1830,6 +1830,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0077a7882b3b4448ac8fed6c6982b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ssongid: 0
 --- !u!4 &822500812
 Transform:
   m_ObjectHideFlags: 0
@@ -2497,10 +2498,10 @@ MonoBehaviour:
   VLG: {fileID: 2043055199}
   snapForce: 0
   album:
-  - {fileID: 21300000, guid: 697326412c29ce84bab61be1af78a106, type: 3}
-  - {fileID: 21300000, guid: 7281c1ace221ee34082b555ae4d28d17, type: 3}
-  - {fileID: 21300000, guid: e347b6de07ac76441bd2094e0263d953, type: 3}
-  - {fileID: 21300000, guid: 12e37e496da0e25439217cfe824e0d62, type: 3}
+  - {fileID: -2753402615517092576, guid: 32b9cbfea6cd76a4a88a50b372fcb8ce, type: 3}
+  - {fileID: -3992921099623708573, guid: 2ef594779fce8a9479cf02d09ec3b70e, type: 3}
+  - {fileID: -4393977588702390114, guid: 476d448d8e435fe4ca083da5f90a6036, type: 3}
+  - {fileID: -17792372991597135, guid: 84e4504f0192b0d4aaa3483e5d55dc14, type: 3}
   - {fileID: 21300000, guid: f17a5153fedc89049840079ccb1b69ef, type: 3}
   - {fileID: 21300000, guid: e3ddd332d376dea4fa35bb2e08d28dc5, type: 3}
   - {fileID: 21300000, guid: 5b2cdc8335936f44db4bb63d9921fa3d, type: 3}
@@ -2508,7 +2509,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5b2cdc8335936f44db4bb63d9921fa3d, type: 3}
   - {fileID: 21300000, guid: 907a346c60f497c46ac077e894d2bdd6, type: 3}
   - {fileID: 6660783624410144326, guid: 067c4f2e0a23ffa4cbd06aef56e10f34, type: 3}
-  - {fileID: 21300000, guid: 7281c1ace221ee34082b555ae4d28d17, type: 3}
+  - {fileID: -17792372991597135, guid: 84e4504f0192b0d4aaa3483e5d55dc14, type: 3}
   main_image: {fileID: 139113760}
   score_text: {fileID: 2106088859}
 --- !u!114 &1181832996 stripped
