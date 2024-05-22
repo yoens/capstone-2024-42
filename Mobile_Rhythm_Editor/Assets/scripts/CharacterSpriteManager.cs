@@ -13,6 +13,7 @@ public class CharacterSpriteManager : MonoBehaviour
     public Sprite goodSprite;
     public Sprite greatSprite;
     public Sprite perfectSprite;
+    
 
     void Awake()
     {
@@ -30,39 +31,50 @@ public class CharacterSpriteManager : MonoBehaviour
 
     public void ChangeSprite(string judgment)
     {
-        if(character_select_ID == 0)
-        {
-            switch (judgment)
-            {
-                case "Miss":
-                    characterRenderer.sprite = missSprite1;
-                    break;
-                case "Good":
-                    characterRenderer.sprite = goodSprite1;
-                    break;
-                case "Great":
-                    characterRenderer.sprite = greatSprite1;
-                    break;
-                case "Perfect":
-                    characterRenderer.sprite = perfectSprite1;
-                    break;
-            }
-        }
-        else if(character_select_ID == 1)
+        CharacterSelect chsp = new CharacterSelect();
+        int chsprite = User.user.character;
+        if(chsprite == 0)
         {
             switch (judgment)
             {
                 case "Miss":
                     characterRenderer.sprite = missSprite;
+                    
                     break;
                 case "Good":
                     characterRenderer.sprite = goodSprite;
+     
                     break;
                 case "Great":
                     characterRenderer.sprite = greatSprite;
+
                     break;
                 case "Perfect":
                     characterRenderer.sprite = perfectSprite;
+
+                    break;
+            }
+        }
+        else if(chsprite == 1)
+        {
+            switch (judgment)
+            {
+
+                case "Miss":
+                    characterRenderer.sprite = missSprite1;
+                  
+                    break;
+                case "Good":
+                    characterRenderer.sprite = goodSprite1;
+                  
+                    break;
+                case "Great":
+                    characterRenderer.sprite = greatSprite1;
+
+                    break;
+                case "Perfect":
+                    characterRenderer.sprite = perfectSprite1;
+                 
                     break;
             }
         }

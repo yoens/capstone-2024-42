@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterRenderer: {fileID: 1889294544985759288}
+  missSprite1: {fileID: 1536294077, guid: 04dd6ab5e62c32d23835947d17013d15, type: 3}
+  goodSprite1: {fileID: 266551600, guid: 152f90acedda5ae2f9aa07232885bf0b, type: 3}
+  greatSprite1: {fileID: 266551600, guid: 152f90acedda5ae2f9aa07232885bf0b, type: 3}
+  perfectSprite1: {fileID: -1896188711, guid: a34660d367e71b3a2be0255e35fa499d, type: 3}
   missSprite: {fileID: -58788930, guid: f1b937d1ed8531737aed2911f7c0fcdc, type: 3}
   goodSprite: {fileID: 1885540179, guid: 47d6ba1833e1f8907b11d0efd95672bc, type: 3}
   greatSprite: {fileID: 1885540179, guid: 47d6ba1833e1f8907b11d0efd95672bc, type: 3}

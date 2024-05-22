@@ -21,24 +21,18 @@ public class RotateOnTouch : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0); // 첫 번째 터치를 가져옵니다.
             Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
-            touchPos.z = 0;  // Z축 조정, 원판이 XY 평면에 있을 경우
+            touchPos.z = 0;
 
             if (touch.phase == TouchPhase.Moved && touchCollider.OverlapPoint(touchPos))
             {
                 Vector2 touchDeltaPosition = touch.deltaPosition;
                 float rotation = touchDeltaPosition.x * rotationSpeed * sensitivity * Time.deltaTime;
-                transform.RotateAround(centerPoint.position, Vector3.forward, -rotation);
+                bool shouldRotateClockwise = touchDeltaPosition.x > 0; // x 이동 거리가 양수면 시계 방향 회전
+                transform.RotateAround(centerPoint.position, Vector3.forward, shouldRotateClockwise ? -rotation : rotation);
 
-                // 현재 각도를 계산하고 이전 각도와 비교하여 회전 방향 판단
                 float currentAngle = transform.eulerAngles.z;
-                bool isRotatingRight = (Mathf.DeltaAngle(previousAngle, currentAngle) < 0);
-
-                if (randomMarkers != null)
-                {
-                    randomMarkers.UpdateRotation(currentAngle, isRotatingRight);
-                }
-
-                previousAngle = currentAngle;  // 이전 각도 업데이트
+                randomMarkers.UpdateRotation(currentAngle, !shouldRotateClockwise); // 회전 방향을 반대로 전달
+                previousAngle = currentAngle;
             }
         }
     }

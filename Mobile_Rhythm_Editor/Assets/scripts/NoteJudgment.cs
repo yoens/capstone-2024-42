@@ -100,21 +100,25 @@ public class NoteJudgment : MonoBehaviour
         if (distance <= perfectThreshold)
         {
             PerformAction(100, 1, 1);
+            CharacterSpriteManager.Instance.ChangeSprite("Perfect");
             return "Perfect";
         }
         else if (distance <= greatThreshold)
         {
             PerformAction(80, 1, 1);
+            CharacterSpriteManager.Instance.ChangeSprite("Great");
             return "Great";
         }
         else if (distance <= goodThreshold)
         {
             PerformAction(50, 1, 1);
+            CharacterSpriteManager.Instance.ChangeSprite("Good");
             return "Good";
         }
         else
         {
             PerformMissAction();
+            CharacterSpriteManager.Instance.ChangeSprite("Miss");
             return "Miss";
         }
     }
@@ -125,7 +129,7 @@ public class NoteJudgment : MonoBehaviour
         if (effectPrefab != null)
         {
             GameObject effect = Instantiate(effectPrefab, judgmentLine.position, Quaternion.Euler(0, 0, 315));
-            Destroy(effect, 1f);
+            Destroy(effect, 0.7f);
             Debug.Log("Effect created for " + note.tag);
         }
         Destroy(note);
@@ -159,7 +163,7 @@ public class NoteJudgment : MonoBehaviour
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.AddScore(0);
         if (ComboManager.Instance != null)
-            ComboManager.Instance.ResetCombo();
+            ComboManager.Instance.ResetCombo_play();
         if (LifeManager.Instance != null)
             LifeManager.Instance.Minus(0);
     }

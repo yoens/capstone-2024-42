@@ -44,10 +44,13 @@ public class RandomMarkers : MonoBehaviour
 
     void ActivateMarker()
     {
-        shouldRotateRight = Random.value > 0.5f;
-        markerA = objectPoolManager.GetObject("Marker");
-        markerA.transform.position = GetPositionOnCircle(0); // 마커 위치
-        OrientMarkerTowardsCenter(markerA, shouldRotateRight ? "Down" : "Up");
+        markerA = objectPoolManager.GetObject("Marker"); // 랜덤 마커 받아오기
+        markerA.transform.position = GetPositionOnCircle(0); // 마커 위치 설정
+
+        // 마커 방향을 체크하고 회전 방향 설정
+        MarkerType markerType = markerA.GetComponent<MarkerType>();
+        shouldRotateRight = markerType.IsUpMarker;
+        OrientMarkerTowardsCenter(markerA);
     }
 
     public void UpdateRotation(float currentAngle, bool isRotatingRight)
@@ -85,10 +88,8 @@ public class RandomMarkers : MonoBehaviour
                            0);
     }
 
-    void OrientMarkerTowardsCenter(GameObject marker, string direction)
+    void OrientMarkerTowardsCenter(GameObject marker)
     {
         marker.transform.rotation = Quaternion.LookRotation(Vector3.forward, centerPoint.position - marker.transform.position);
-        // Change the marker's appearance based on direction
-        marker.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>($"Sprites/{direction}Arrow");
     }
 }
