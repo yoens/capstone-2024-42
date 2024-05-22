@@ -9,17 +9,13 @@ public class Song_Select_Scene_Manager : MonoBehaviour
     public ScrollRect scrollRect;
     public RectTransform contentPanel;
     public RectTransform sampleListItem;
-
     public VerticalLayoutGroup VLG;
-
     bool isSnapped;
-
     public float snapForce;
     float snapSpeed;
 
     public Sprite[] album;
     public Image main_image;
-
     public TMP_Text score_text;
 
     public static int play_song_id = 0;

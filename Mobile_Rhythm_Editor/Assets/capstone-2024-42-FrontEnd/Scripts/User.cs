@@ -23,7 +23,7 @@ public class User_info
     {
         user.uid = 1000;
         user.name = "min";
-        user.character = 1;
+        user.character = 0;
         user.level = 1;
         user.exp = 50;
         user.gold = 10000;

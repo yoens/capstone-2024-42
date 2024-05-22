@@ -15,9 +15,9 @@ public class Main_Scene_Manager : MonoBehaviour
     
     void Start()
     {
-        Text_user_name.text = User.user.name.ToString();
-        Text_user_level.text = User.user.level.ToString();
-        Text_gold.text = User.user.gold.ToString();
+        //Text_user_name.text = User.user.name.ToString();
+        //Text_user_level.text = User.user.level.ToString();
+        //Text_gold.text = User.user.gold.ToString();
         Image_character.sprite = character_image_sprite[User.user.character];
     }
 
